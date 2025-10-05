@@ -6,7 +6,7 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 06:31:29 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/05 06:31:33 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/05 18:36:00 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	mlx_destroy_display(void *mlx_ptr);
 */
 
 int	mlx_hook(void *win_ptr, int x_event, int x_mask,
-                 int (*funct)(), void *param);
+                 void *funct, void *param);
 
 int	mlx_do_key_autorepeatoff(void *mlx_ptr);
 int	mlx_do_key_autorepeaton(void *mlx_ptr);

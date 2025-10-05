@@ -6,7 +6,7 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 06:05:56 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/05 07:01:32 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/05 21:15:54 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include "./mlx.h"
+# include "./mlx_int_macros.h"
 # include <string.h>
 
 struct s_win_list;
@@ -29,6 +30,13 @@ typedef struct _XVisual Visual;
 typedef unsigned long Colormap;
 typedef unsigned long Atom;
 
+typedef struct s_hook_info
+{
+	int			(*hook)();
+	void		*param;
+	long		mask;
+}	t_hook_info;
+
 typedef struct s_win_list
 {
 	GLFWwindow			*glfw_win;
@@ -36,11 +44,9 @@ typedef struct s_win_list
 	int					height;
 	char				*title;
 	void				*img_list;
-	int					(*key_hook_func)(int, void *);
-	void				*key_hook_param;
+	t_hook_info			hooks[MLX_MAX_EVENTS];
 	struct s_win_list	*next;
 	struct s_xvar		*xvar_ptr;
-
 }	t_win_list;
 
 typedef struct	s_xvar
@@ -68,5 +74,11 @@ typedef struct	s_xvar
 	int			window_height;
 	const char	*window_title;
 }				t_xvar;
+
+void	_mlx_glfw_dispatch_mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+void	_mlx_glfw_dispatch_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+void	_mlx_glfw_dispatch_cursor_pos_callback(GLFWwindow* window, double xpos, double ypos);
+void	_mlx_glfw_dispatch_framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void	_mlx_glfw_dispatch_window_close_callback(GLFWwindow* window);
 
 #endif

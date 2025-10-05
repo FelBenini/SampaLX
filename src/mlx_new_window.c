@@ -6,7 +6,7 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 06:26:02 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/05 07:19:59 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/05 18:55:37 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,9 @@ void	*mlx_new_window(void *mlx_ptr, int size_x, int size_y, char *title)
 		return (NULL);
 	}
 	new_win_node->img_list = NULL;
-	new_win_node->key_hook_func = NULL;
-	new_win_node->key_hook_param = NULL;
 	new_win_node->next = NULL;
 	new_win_node->xvar_ptr = xvar;
+	memset(new_win_node->hooks, 0, sizeof(new_win_node->hooks));
 	glfwMakeContextCurrent(new_glfw_window);
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
