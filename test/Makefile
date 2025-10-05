@@ -5,44 +5,30 @@
 #                                                     +:+ +:+         +:+      #
 #    By: fbenini- <your@mail.com>                   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/10/05 05:23:30 by fbenini-          #+#    #+#              #
-#    Updated: 2025/10/05 07:11:09 by fbenini-         ###   ########.fr        #
+#    Created: 2025/10/05 06:33:27 by fbenini-          #+#    #+#              #
+#    Updated: 2025/10/05 07:12:55 by fbenini-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = "libmlx.a"
-
-SRCS = ./src/mlx_init.c \
-	   ./src/mlx_new_window.c \
-	   ./src/mlx_loop.c \
-	   ./src/mlx_destroy_window.c
-
-OBJS = $(SRCS:%.c=%.o)
-
-CFLAGS = -Wall -Wextra -Werror -O3
+NAME = program
 
 CC = cc
 
-AR = ar rcs
+CFLAGS = -Wall -Wextra -Werror -O3 -I../ -lGL -lglfw
 
-GLAD = ./glad/libglad.a
+SRCS = ./main.c
 
-GLAD_SRCS = ./glad/src/glad.c
+OBJS = $(SRCS:.c=.o)
 
-GLAD_OBJS = $(GLAD_SRCS:.c=.o)
+LIBMLX = ../libmlx.a
 
-$(NAME): $(OBJS) $(GLAD)
-	mv $(GLAD) $(NAME)
-	$(AR) $(NAME) $(OBJS)
-
-$(GLAD): $(GLAD_OBJS)
-	$(AR) $(GLAD) $(GLAD_OBJS)
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) ../libmlx.a
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(GLAD_OBJS)
 	rm -rf $(OBJS)
 
 fclean: clean
@@ -50,4 +36,4 @@ fclean: clean
 
 re: fclean $(NAME)
 
-.PHONY: all clean fclean re
+.PHONY: all re fclean clean
