@@ -6,7 +6,7 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 06:05:56 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/05 21:15:54 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/06 00:33:26 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,10 @@ typedef struct s_win_list
 	t_hook_info			hooks[MLX_MAX_EVENTS];
 	struct s_win_list	*next;
 	struct s_xvar		*xvar_ptr;
+    GLuint				shader_program;  // Shader for rendering images
+    GLuint				vao;             // Vertex Array Object
+    GLuint				vbo;             // Vertex Buffer Object
+    GLuint				ebo;             // Element Buffer Object
 }	t_win_list;
 
 typedef struct	s_xvar
@@ -74,6 +78,26 @@ typedef struct	s_xvar
 	int			window_height;
 	const char	*window_title;
 }				t_xvar;
+
+typedef struct _XImage XImage;
+typedef unsigned long Pixmap;
+typedef struct _XGC *GC;
+typedef struct {
+    int shmid;
+    char *shmaddr;
+    int readOnly;
+} XShmSegmentInfo;
+
+typedef struct s_img
+{
+    int             width;
+    int             height;
+    unsigned char   *data;       // CPU pixel buffer
+    GLuint          texture;     // GPU texture
+    int             bpp;
+    int             line_len;
+    int             endian;
+}	t_img;
 
 void	_mlx_glfw_dispatch_mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 void	_mlx_glfw_dispatch_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);

@@ -6,7 +6,7 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 06:26:02 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/05 18:55:37 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/05 22:52:09 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static void	initialize_hints()
 	glfwWindowHint(GLFW_BLUE_BITS, 8);
 	glfwWindowHint(GLFW_ALPHA_BITS, 8);
 	glfwWindowHint(GLFW_DEPTH_BITS, 24);
+	glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_FALSE);
 	glfwSetErrorCallback(_mlx_glfw_error_callback);
 }
 
@@ -65,6 +66,10 @@ void	*mlx_new_window(void *mlx_ptr, int size_x, int size_y, char *title)
 	new_win_node->img_list = NULL;
 	new_win_node->next = NULL;
 	new_win_node->xvar_ptr = xvar;
+	new_win_node->shader_program = 0;
+	new_win_node->vao = 0;
+	new_win_node->vbo = 0;
+	new_win_node->ebo = 0;
 	memset(new_win_node->hooks, 0, sizeof(new_win_node->hooks));
 	glfwMakeContextCurrent(new_glfw_window);
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))

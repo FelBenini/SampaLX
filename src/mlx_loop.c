@@ -6,7 +6,7 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 06:46:19 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/05 21:16:07 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/05 23:03:16 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,6 @@ int     mlx_loop(void *mlx_ptr)
 			if (xvar->loop_hook(xvar->loop_param) != 0)
 				xvar->end_loop = 1;
         }
-		else
-		{
-			current_win = xvar->win_list;
-			while (current_win)
-			{
-				glfwMakeContextCurrent(current_win->glfw_win);
-				glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-				glClear(GL_COLOR_BUFFER_BIT);
-				glfwSwapBuffers(current_win->glfw_win);
-				current_win = current_win->next;
-			}
-		}
 		current_win = xvar->win_list;
 		if (xvar->end_loop)
 			break;

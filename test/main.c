@@ -6,44 +6,42 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 06:30:56 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/05 19:59:10 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/06 01:01:22 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/mlx.h"
-#include <sys/time.h>
-#include <stdio.h>
+#include "../includes/mlx_int.h"
 
-int	keypress_loop(int keycode, void *param)
+int render_frame(void *param)
 {
-	printf("%d\n", keycode);
-	if (keycode == 53 || keycode == 65307)
-		mlx_loop_end(param);
-	return (1);
+    t_xvar *xvar = (t_xvar *)param;
+    t_win_list *win = xvar->win_list;
+
+    // Draw your image in the window
+	if (win && win->img_list)
+		mlx_put_image_to_window(xvar, win, win->img_list, 0, 0);
+	printf("aaaaa");
+    return 0;
 }
 
-int	mouse_move(int x, int y, void *param)
+int main(void)
 {
-	(void)param;
-	printf("%d %d\n", x, y);
-	return (0);
+    void *mlx = mlx_init();
+    void *win = mlx_new_window(mlx, 600, 400, "Loop Hook Example");
+    void *img = mlx_new_image(mlx, 400, 400);
+
+    // Fill image with color
+    int bpp, line_len, endian;
+    char *addr = mlx_get_data_addr(img, &bpp, &line_len, &endian);
+    for (int y = 0; y < 400; y++)
+        for (int x = 0; x < 400; x++)
+            *(unsigned int *)(addr + y * line_len + x * 4) = 0x00FF00; // green
+
+    ((t_win_list *)win)->img_list = img;
+
+    mlx_loop_hook(mlx, render_frame, mlx);
+    mlx_loop(mlx);
+
+    return 0;
 }
 
-int	main(void)
-{
-	void	*mlx;
-	void	*win_ptr;
-	void	*win2;
-
-	mlx = mlx_init();
-	win_ptr = mlx_new_window(mlx, 600, 800, "Heyyy");
-	win2 = mlx_new_window(mlx, 600, 810, "HELLLO");
-	mlx_hook(win_ptr, 2, 1L << 0, keypress_loop, mlx);
-	mlx_hook(win_ptr, 6, 1L << 6, mouse_move, mlx);
-	mlx_loop(mlx);
-	(void)win_ptr;
-	(void)win2;
-	mlx_destroy_window(mlx, win_ptr);
-	mlx_destroy_window(mlx, win2);
-	return (0);
-}

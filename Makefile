@@ -6,7 +6,7 @@
 #    By: fbenini- <your@mail.com>                   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/05 05:23:30 by fbenini-          #+#    #+#              #
-#    Updated: 2025/10/05 18:12:37 by fbenini-         ###   ########.fr        #
+#    Updated: 2025/10/05 22:52:33 by fbenini-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,11 @@ SRCS = ./src/mlx_init.c \
 	   ./src/mlx_loop.c \
 	   ./src/mlx_destroy_window.c \
 	   ./src/mlx_hook.c \
-	   ./src/mlx_dispatchers.c
+	   ./src/mlx_dispatchers.c \
+	   ./src/mlx_new_image.c \
+	   ./src/mlx_get_data_addr.c \
+	   ./src/mlx_put_image_to_window.c \
+	   ./src/mlx_loop_hook.c
 
 OBJS = $(SRCS:%.c=%.o)
 
