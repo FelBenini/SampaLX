@@ -1,36 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_init.c                                         :+:      :+:    :+:   */
+/*   mlx_destroy_display.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/11 18:21:20 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/12 00:54:30 by fbenini-         ###   ########.fr       */
+/*   Created: 2025/10/11 18:50:00 by fbenini-          #+#    #+#             */
+/*   Updated: 2025/10/11 18:51:05 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mlx_int.h"
-#include <GLFW/glfw3.h>
 
-static void	_mlx_glfw_error_callback(int error, const char *description)
-{
-	fprintf(stderr, "(GLFW Backend): Error %d: %s\n", error, description);
-}
-
-void	*mlx_init()
+int	mlx_destroy_display(void *mlx_ptr)
 {
 	t_mlx	*mlx;
 
-	mlx = malloc(sizeof(t_mlx));
-	if (!mlx)
-		return (NULL);
-	glfwSetErrorCallback(_mlx_glfw_error_callback);
-	if (!glfwInit())
-	{
-		free(mlx);
-		return (NULL);
-	}
-	mlx->is_loop_end = 0;
-	return (mlx);
+	mlx = (t_mlx *)mlx_ptr;
+	glfwTerminate();
+	free(mlx);
+	return (0);
 }

@@ -5,55 +5,58 @@
 #                                                     +:+ +:+         +:+      #
 #    By: fbenini- <your@mail.com>                   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/10/05 05:23:30 by fbenini-          #+#    #+#              #
-#    Updated: 2025/10/05 22:52:33 by fbenini-         ###   ########.fr        #
+#    Created: 2025/10/11 18:28:31 by fbenini-          #+#    #+#              #
+#    Updated: 2025/10/12 23:32:03 by fbenini-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = "libmlx.a"
-
-SRCS = ./src/mlx_init.c \
-	   ./src/mlx_new_window.c \
-	   ./src/mlx_loop.c \
-	   ./src/mlx_destroy_window.c \
-	   ./src/mlx_hook.c \
-	   ./src/mlx_dispatchers.c \
-	   ./src/mlx_new_image.c \
-	   ./src/mlx_get_data_addr.c \
-	   ./src/mlx_put_image_to_window.c \
-	   ./src/mlx_loop_hook.c
-
-OBJS = $(SRCS:%.c=%.o)
-
-CFLAGS = -O3
+NAME = "minilibx.a"
 
 CC = cc
 
 AR = ar rcs
 
+CFLAGS = -Wall -Wextra -Werror
+
+ENDFLAGS = -lglfw -lGL
+
 GLAD = ./glad/libglad.a
 
-GLAD_SRCS = ./glad/src/glad.c
+GLADSRCS = ./glad/src/glad.c
 
-GLAD_OBJS = $(GLAD_SRCS:.c=.o)
+GLADOBJS = $(GLADSRCS:.c=.o)
+
+SRCS = ./src/mlx_init.c \
+	   ./src/mlx_destroy_display.c \
+	   ./src/mlx_loop.c \
+	   ./src/mlx_loop_hook.c \
+	   ./src/mlx_new_window.c \
+	   ./src/mlx_dispatchers.c \
+	   ./src/mlx_shaders.c \
+	   ./src/mlx_get_data_addr.c \
+	   ./src/mlx_new_image.c \
+	   ./src/mlx_put_image_to_window.c
+
+OBJS = $(SRCS:.c=.o)
 
 $(NAME): $(OBJS) $(GLAD)
 	mv $(GLAD) $(NAME)
-	$(AR) $(NAME) $(OBJS)
+	$(AR) $(NAME) $(OBJS) $(GLADOBJS)
 
-$(GLAD): $(GLAD_OBJS)
-	$(AR) $(GLAD) $(GLAD_OBJS)
+$(GLAD): $(GLADOBJS)
+	$(AR) $(GLAD) $(GLADOBJS)
 
-%.o: %.c
+%.c: %.o
 	$(CC) $(CFLAGS) -c $< -o $@
 
+all: $(NAME)
+
 clean:
-	rm -rf $(GLAD_OBJS)
-	rm -rf $(OBJS)
+	rm -rf $(OBJS) $(GLADOBJS)
 
 fclean: clean
 	rm -rf $(NAME)
 
 re: fclean $(NAME)
 
-.PHONY: all clean fclean re
+.PHONY: re clean fclean all

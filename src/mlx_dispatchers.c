@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/05 21:14:07 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/05 21:14:52 by fbenini-         ###   ########.fr       */
+/*   Created: 2025/10/12 18:36:22 by fbenini-          #+#    #+#             */
+/*   Updated: 2025/10/12 18:37:47 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	_mlx_glfw_dispatch_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	t_win_list	*win_data;
+	t_window	*win_data;
 	int			mlx_event_code;
 	int			mlx_keycode;
 	t_key_funct	user_hook;
 
-	win_data = (t_win_list *)glfwGetWindowUserPointer(window);
+	win_data = (t_window *)glfwGetWindowUserPointer(window);
 	if (!win_data)
 		return;
 	mlx_event_code = 0;
@@ -41,14 +41,14 @@ void	_mlx_glfw_dispatch_key_callback(GLFWwindow* window, int key, int scancode, 
 
 void	_mlx_glfw_dispatch_mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
-	t_win_list		*win_data;
+	t_window		*win_data;
 	double			xpos;
 	double			ypos;
 	int				mlx_event_code;
 	int				mlx_button;
 	t_mouse_funct	user_hook;
 
-	win_data = (t_win_list *)glfwGetWindowUserPointer(window);
+	win_data = (t_window *)glfwGetWindowUserPointer(window);
 	if (!win_data)
 		return;
     glfwGetCursorPos(window, &xpos, &ypos);
@@ -68,10 +68,10 @@ void	_mlx_glfw_dispatch_mouse_button_callback(GLFWwindow* window, int button, in
 
 void	_mlx_glfw_dispatch_cursor_pos_callback(GLFWwindow* window, double xpos, double ypos)
 {
-    t_win_list		*win_data;
+    t_window		*win_data;
 	t_motion_funct	user_hook;
 
-	win_data = (t_win_list *)glfwGetWindowUserPointer(window);
+	win_data = (t_window *)glfwGetWindowUserPointer(window);
 	if (!win_data)
 		return;
 	if (win_data->hooks[MLX_MOTION_NOTIFY].hook)
@@ -83,10 +83,10 @@ void	_mlx_glfw_dispatch_cursor_pos_callback(GLFWwindow* window, double xpos, dou
 
 void	_mlx_glfw_dispatch_framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-	t_win_list		*win_data;
+	t_window		*win_data;
 	t_expose_funct	user_hook;
 
-	win_data = (t_win_list *)glfwGetWindowUserPointer(window);	
+	win_data = (t_window *)glfwGetWindowUserPointer(window);	
 	if (!win_data)
 		return;
 	glViewport(0, 0, width, height);
@@ -101,10 +101,10 @@ void	_mlx_glfw_dispatch_framebuffer_size_callback(GLFWwindow* window, int width,
 
 void	_mlx_glfw_dispatch_window_close_callback(GLFWwindow* window)
 {
-	t_win_list		*win_data;
+	t_window		*win_data;
 	t_destroy_funct	user_hook;
 
-	win_data = (t_win_list *)glfwGetWindowUserPointer(window);
+	win_data = (t_window *)glfwGetWindowUserPointer(window);
 	if (!win_data)
 		return;
 	if (win_data->hooks[MLX_DESTROY_NOTIFY].hook)

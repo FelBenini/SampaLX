@@ -1,17 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_int_macros.h                                   :+:      :+:    :+:   */
+/*   mlx_int_hooks.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 17:08:34 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/05 18:51:16 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/12 18:40:13 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MLX_INT_MACROS_H
-# define MLX_INT_MACROS_H
+#ifndef MLX_INT_HOOKS_H
+# define MLX_INT_HOOKS_H
+
+# include <GLFW/glfw3.h>
 
 // --- MiniLibX Events Values ---
 #define MLX_KEY_PRESS		2
@@ -40,5 +42,12 @@ typedef int (*t_mouse_funct)(int button, int x, int y, void *param);
 typedef int (*t_motion_funct)(int x, int y, void *param);
 typedef int (*t_expose_funct)(void *param);
 typedef int (*t_destroy_funct)(void *param);
+
+// --- Dispatchers for GLFW ---
+void	_mlx_glfw_dispatch_mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+void	_mlx_glfw_dispatch_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+void	_mlx_glfw_dispatch_cursor_pos_callback(GLFWwindow* window, double xpos, double ypos);
+void	_mlx_glfw_dispatch_framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void	_mlx_glfw_dispatch_window_close_callback(GLFWwindow* window);
 
 #endif

@@ -121,6 +121,8 @@ void	*mlx_new_window(void *mlx_ptr, int width, int height, char *title)
 		glfwTerminate();
 		return (NULL);
 	}
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	win->shader = create_shader_program();
 	glGenVertexArrays(1, &win->VAO);
 	glGenBuffers(1, &win->VBO);
@@ -169,14 +171,12 @@ void	mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr, int x,
 	if (!win || !img)
 		return ;
 	glfwMakeContextCurrent(win->window);
-	glClear(GL_COLOR_BUFFER_BIT);
 	glBindTexture(GL_TEXTURE_2D, img->texture_id);
 	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, img->width, img->height, GL_RGBA, GL_UNSIGNED_BYTE, img->pixels);
 	glUseProgram(win->shader);
 	glBindVertexArray(win->VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	glfwSwapBuffers(win->window);
-	glfwPollEvents();
 }
 
 void	draw_pixel(t_img_data *data, int x, int y, unsigned int color)
@@ -192,16 +192,26 @@ void	draw_pixel(t_img_data *data, int x, int y, unsigned int color)
 	dst[3] = color & 0xFF;
 }
 
+void mlx_render(void *win_ptr)
+{
+    t_win *win = (t_win *)win_ptr;
+
+    glfwPollEvents();
+}
+
 int	main(void)
 {
 	t_mlx	mlx;
 	void	*win;
 	void	*img;
+	void	*img2;
 	t_img	*i;
 	t_img_data	data;
+	t_img_data	data2;
 
 	win = mlx_new_window(&mlx, 800, 600, "MLX Modern OpenGL");
 	img = mlx_new_image(&mlx, 800, 600);
+	img2 = mlx_new_image(&mlx, 800, 600);
 	i = (t_img *)img;
 	data.addr = i->pixels;
 	data.width = i->width;
@@ -209,10 +219,20 @@ int	main(void)
 	data.bits_per_pixel = 32;
 	data.line_length = i->width * 4;
 	draw_pixel(&data, 100, 100, 0xFF0000FF);
-	draw_pixel(&data, 200, 200, 0x00FF00FF);
-	draw_pixel(&data, 300, 300, 0x0000FFFF);
+	draw_pixel(&data, 200, 200, 0xFFFF00FF);
+	draw_pixel(&data, 300, 300, 0xFF00FFFF);
+	mlx_put_image_to_window(&mlx, win, img, 0, 0);
+	t_img *i2 = (t_img *)img2;
+	data2.addr = i2->pixels;
+	data2.width = i2->width;
+	data2.height = i2->height;
+	data2.bits_per_pixel = 32;
+	data2.line_length = i2->width * 4;
+	draw_pixel(&data2, 150, 150, 0xFFFFFFFF);
+	mlx_put_image_to_window(&mlx, win, img2, 0, 0);
+	mlx_render(win);
 	while (!glfwWindowShouldClose(((t_win *)win)->window))
-		mlx_put_image_to_window(&mlx, win, img, 0, 0);
+		;
 	free(i->pixels);
 	free(i);
 	glfwDestroyWindow(((t_win *)win)->window);

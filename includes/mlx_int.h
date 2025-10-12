@@ -5,30 +5,21 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/05 06:05:56 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/06 00:33:26 by fbenini-         ###   ########.fr       */
+/*   Created: 2025/10/11 18:22:37 by fbenini-          #+#    #+#             */
+/*   Updated: 2025/10/12 23:06:45 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MLX_INT_H
 # define MLX_INT_H
 
+# include "mlx.h"
 # include "../glad/include/glad/glad.h"
+# include "mlx_int_hooks.h"
 # include <GLFW/glfw3.h>
 # include <stdlib.h>
 # include <stdio.h>
-# include "./mlx.h"
-# include "./mlx_int_macros.h"
 # include <string.h>
-
-struct s_win_list;
-typedef struct s_win_list t_win_list;
-
-typedef struct _XDisplay Display;
-typedef unsigned long Window;
-typedef struct _XVisual Visual;
-typedef unsigned long Colormap;
-typedef unsigned long Atom;
 
 typedef struct s_hook_info
 {
@@ -37,72 +28,39 @@ typedef struct s_hook_info
 	long		mask;
 }	t_hook_info;
 
-typedef struct s_win_list
+typedef struct s_window
 {
-	GLFWwindow			*glfw_win;
-	int					width;
-	int					height;
-	char				*title;
-	void				*img_list;
-	t_hook_info			hooks[MLX_MAX_EVENTS];
-	struct s_win_list	*next;
-	struct s_xvar		*xvar_ptr;
-    GLuint				shader_program;  // Shader for rendering images
-    GLuint				vao;             // Vertex Array Object
-    GLuint				vbo;             // Vertex Buffer Object
-    GLuint				ebo;             // Element Buffer Object
-}	t_win_list;
-
-typedef struct	s_xvar
-{
-	Display		*display;
-	Window		root;
-	int			screen;
-	int			depth;
-	Visual		*visual;
-	Colormap	cmap;
-	int			private_cmap;
-	t_win_list	*win_list;
-	int			(*loop_hook)(void *);
-	void		*loop_param;
-	int			use_xshm;
-	int			pshm_format;
-	int			do_flush;
-	int			decrgb[6];
-	Atom		wm_delete_window;
-	Atom		wm_protocols;
-	int 		end_loop;
-
-	GLFWwindow	*glfw_window;
-	int			window_width;
-	int			window_height;
-	const char	*window_title;
-}				t_xvar;
-
-typedef struct _XImage XImage;
-typedef unsigned long Pixmap;
-typedef struct _XGC *GC;
-typedef struct {
-    int shmid;
-    char *shmaddr;
-    int readOnly;
-} XShmSegmentInfo;
+	unsigned int	vbo;
+	unsigned int	vao;
+	unsigned int	ebo;
+	unsigned int	shader_program;
+	char			*win_title;
+	int				width;
+	int				height;
+	struct s_window	*next; // linked list to handle multiple windows
+	GLFWwindow		*glfw_window;
+	t_hook_info		hooks[MLX_MAX_EVENTS];
+}	t_window;
 
 typedef struct s_img
 {
-    int             width;
-    int             height;
-    unsigned char   *data;       // CPU pixel buffer
-    GLuint          texture;     // GPU texture
-    int             bpp;
-    int             line_len;
-    int             endian;
+	unsigned char	*data;
+	unsigned int	texture_id;
+	int				width;
+	int				height;
+	int				line_len;
+	int				endian;
+	int				bits_per_pixel;
 }	t_img;
 
-void	_mlx_glfw_dispatch_mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
-void	_mlx_glfw_dispatch_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
-void	_mlx_glfw_dispatch_cursor_pos_callback(GLFWwindow* window, double xpos, double ypos);
-void	_mlx_glfw_dispatch_framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void	_mlx_glfw_dispatch_window_close_callback(GLFWwindow* window);
+typedef struct s_mlx
+{
+	t_window	*win_list;
+	int			(*loop_hook)(void *param);
+	void		*loop_param;
+	int			is_loop_end;
+}	t_mlx;
+
+unsigned int	_create_shader_program(void);
 
 #endif

@@ -10,38 +10,58 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/mlx_int.h"
+#include "../includes/mlx.h"
+#include <stdio.h>
 
-int render_frame(void *param)
+int	loop_hook(int *param)
 {
-    t_xvar *xvar = (t_xvar *)param;
-    t_win_list *win = xvar->win_list;
+	(*param)++;
+	return (0);
+}
 
-    // Draw your image in the window
-	if (win && win->img_list)
-		mlx_put_image_to_window(xvar, win, win->img_list, 0, 0);
-	printf("aaaaa");
-    return 0;
+void	draw_pixel(void *data, int x, int y, unsigned int color)
+{
+	unsigned char	*dst;
+	int				width = 500;
+	int				height = 500;
+	int				bits_per_pixel;
+	int				line_length;
+	void			*addr;
+
+	addr = mlx_get_data_addr(data, &bits_per_pixel, &line_length, NULL);
+	if (x < 0 || x >= width || y < 0 || y >= height)
+		return ;
+	dst = addr + (y * line_length + x * (bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
+}
+
+void	draw_square(void *data)
+{
+	int	x;
+	int	y;
+
+	x = 100;
+	while (x < 400)
+	{
+		y = 100;
+		while (y < 400)
+		{
+			draw_pixel(data, x, y, 0xFF0000FF);
+			y++;
+		}
+		x++;
+	}
 }
 
 int main(void)
 {
-    void *mlx = mlx_init();
-    void *win = mlx_new_window(mlx, 600, 400, "Loop Hook Example");
-    void *img = mlx_new_image(mlx, 400, 400);
+    void *mlx;
+	mlx = mlx_init();
+    void *win = mlx_new_window(mlx, 800, 600, "Texture Test");
+    void *img = mlx_new_image(mlx, 800, 600);
 
-    // Fill image with color
-    int bpp, line_len, endian;
-    char *addr = mlx_get_data_addr(img, &bpp, &line_len, &endian);
-    for (int y = 0; y < 400; y++)
-        for (int x = 0; x < 400; x++)
-            *(unsigned int *)(addr + y * line_len + x * 4) = 0x00FF00; // green
-
-    ((t_win_list *)win)->img_list = img;
-
-    mlx_loop_hook(mlx, render_frame, mlx);
-    mlx_loop(mlx);
-
+	draw_square(img);
+	mlx_put_image_to_window(mlx, win, img, 0, 0);
+	mlx_loop(mlx);
     return 0;
 }
-
