@@ -1,3 +1,4 @@
 *.o
 *.a
 test/program
+a.out
