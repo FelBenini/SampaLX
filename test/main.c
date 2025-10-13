@@ -12,6 +12,7 @@
 
 #include "../includes/mlx.h"
 #include <stdio.h>
+#include <stdint.h>
 
 int	loop_hook(int *param)
 {
@@ -19,14 +20,22 @@ int	loop_hook(int *param)
 	return (0);
 }
 
+void mlx_draw_pixel(uint8_t* pixel, uint32_t color)
+{
+	*(pixel++) = (uint8_t)(color >> 24);
+	*(pixel++) = (uint8_t)(color >> 16);
+	*(pixel++) = (uint8_t)(color >> 8);
+	*(pixel++) = (uint8_t)(color & 0xFF);
+}
+
 void	draw_pixel(void *data, int x, int y, unsigned int color)
 {
-	unsigned char	*dst;
 	int				width = 500;
 	int				height = 500;
 	int				bits_per_pixel;
 	int				line_length;
 	void			*addr;
+	char			*dst;
 
 	addr = mlx_get_data_addr(data, &bits_per_pixel, &line_length, NULL);
 	if (x < 0 || x >= width || y < 0 || y >= height)
@@ -46,7 +55,7 @@ void	draw_square(void *data)
 		y = 100;
 		while (y < 400)
 		{
-			draw_pixel(data, x, y, 0xFF0000FF);
+			draw_pixel(data, x, y, 0x00FF00FF);
 			y++;
 		}
 		x++;

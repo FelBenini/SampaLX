@@ -12,7 +12,39 @@
 
 #include "../includes/mlx_int.h"
 #include <GLFW/glfw3.h>
+#include <stdint.h>
 
+// Little Endian on linux fix, pushing the pixels to where they belong
+static void	_mlx_modify_bits(uint8_t *pixel_start, uint32_t pixel_color)
+{
+    *(pixel_start++) = (uint8_t)((pixel_color >> 24) & 0xFF);
+    *(pixel_start++) = (uint8_t)((pixel_color >> 16) & 0xFF);
+    *(pixel_start++) = (uint8_t)((pixel_color >> 8) & 0xFF);
+    *(pixel_start++) = (uint8_t)(pixel_color & 0xFF);
+}
+
+// Apply the little endian fix on all the pixels of an image
+static void	_mlx_modify_bits_in_img(t_img *img)
+{
+	uint32_t	color;
+	int			y;
+	int			x;
+	uint8_t		*pixelstart;
+
+	y = 0;
+	while (y < img->height)
+	{
+		x = 0;
+		while (x < img->width)
+		{
+			color = *(uint32_t *)(&img->data[(y * img->line_len + x * img->bits_per_pixel / 8)]);
+			pixelstart = (uint8_t *)(&img->data[(y * img->line_len + x * (img->bits_per_pixel / 8))]);
+			_mlx_modify_bits(pixelstart, color);
+			x++;
+		}
+		y++;
+	}
+}
 int	mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr, int x, int y)
 {
 	t_window	*window;
@@ -25,6 +57,7 @@ int	mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr, int x, 
 	(void)y;
 	if (!window || !img)
 		return (1);
+	_mlx_modify_bits_in_img(img);
 	glfwMakeContextCurrent(window->glfw_window);
 	glUseProgram(window->shader_program);
 

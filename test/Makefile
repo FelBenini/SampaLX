@@ -14,7 +14,7 @@ NAME = program
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -O3 -I../ -lGL -lglfw
+CFLAGS = -Wall -Wextra -Werror -O3
 
 SRCS = ./main.c
 
@@ -23,7 +23,7 @@ OBJS = $(SRCS:.c=.o)
 LIBMLX = ../libmlx.a
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) ../minilibx.a
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) ../minilibx.a -lGL -lglfw
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
