@@ -15,12 +15,23 @@
 #include <stdint.h>
 
 // Little Endian on linux fix, pushing the pixels to where they belong
-static void	_mlx_modify_bits(uint8_t *pixel_start, uint32_t pixel_color)
+static void _mlx_modify_bits(uint8_t *pixel_start, uint32_t color)
 {
-    *(pixel_start++) = (uint8_t)((pixel_color >> 24) & 0xFF);
-    *(pixel_start++) = (uint8_t)((pixel_color >> 16) & 0xFF);
-    *(pixel_start++) = (uint8_t)((pixel_color >> 8) & 0xFF);
-    *(pixel_start++) = (uint8_t)(pixel_color & 0xFF);
+    // Extract RGBA components
+    uint8_t r = (color >> 16) & 0xFF;
+    uint8_t g = (color >> 8) & 0xFF;
+    uint8_t b = color & 0xFF;
+    uint8_t a = (color >> 24) & 0xFF;
+    
+    // If alpha is 0, check if RGB is also 0 (truly transparent)
+    // Otherwise default to opaque
+    if (a == 0 && (r != 0 || g != 0 || b != 0))
+        a = 0xFF;  // Color without alpha specified → opaque
+    
+    *(pixel_start++) = r;
+    *(pixel_start++) = g;
+    *(pixel_start++) = b;
+    *(pixel_start++) = a;
 }
 
 // Apply the little endian fix on all the pixels of an image
@@ -72,7 +83,5 @@ int	mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr, int x, 
 	glBindVertexArray(window->vao);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	glfwSwapBuffers(window->glfw_window);
-	glfwPollEvents();
 	return (0);
 }
-

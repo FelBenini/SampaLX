@@ -55,7 +55,7 @@ void	draw_square(void *data)
 		y = 100;
 		while (y < 400)
 		{
-			draw_pixel(data, x, y, 0x00FF00FF);
+			draw_pixel(data, x, y, 0xFFFFFF);
 			y++;
 		}
 		x++;
@@ -68,9 +68,12 @@ int main(void)
 	mlx = mlx_init();
     void *win = mlx_new_window(mlx, 800, 600, "Texture Test");
     void *img = mlx_new_image(mlx, 800, 600);
+	void *img2 = mlx_new_image(mlx, 800, 600);
 
 	draw_square(img);
 	mlx_put_image_to_window(mlx, win, img, 0, 0);
+	draw_pixel(img2, 200, 200, 0x000000);
+	mlx_put_image_to_window(mlx, win, img2, 0, 0);
 	mlx_loop(mlx);
     return 0;
 }

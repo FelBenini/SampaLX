@@ -46,7 +46,7 @@ $(NAME): $(OBJS) $(GLAD)
 $(GLAD): $(GLADOBJS)
 	$(AR) $(GLAD) $(GLADOBJS)
 
-%.c: %.o
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
