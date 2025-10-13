@@ -39,7 +39,6 @@ void *mlx_new_window(void *mlx_ptr, int width, int height, char *title)
 	glfwWindowHint(GLFW_DEPTH_BITS, 24);
 	glfwWindowHint(GLFW_STENCIL_BITS, 8);
 	glfwWindowHint(GLFW_ALPHA_BITS, 8);
-	glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
 	win->width = width;
 	win->height = height;
 	win->win_title = strdup(title);

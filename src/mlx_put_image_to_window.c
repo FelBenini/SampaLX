@@ -22,12 +22,10 @@ static void _mlx_modify_bits(uint8_t *pixel_start, uint32_t color)
     uint8_t g = (color >> 8) & 0xFF;
     uint8_t b = color & 0xFF;
     uint8_t a = (color >> 24) & 0xFF;
-    
     // If alpha is 0, check if RGB is also 0 (truly transparent)
     // Otherwise default to opaque
     if (a == 0 && (r != 0 || g != 0 || b != 0))
         a = 0xFF;  // Color without alpha specified → opaque
-    
     *(pixel_start++) = r;
     *(pixel_start++) = g;
     *(pixel_start++) = b;
