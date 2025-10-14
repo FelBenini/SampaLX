@@ -6,7 +6,7 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 18:10:31 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/13 18:28:38 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/14 13:39:14 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,5 @@ int	mlx_destroy_window(void *mlx_ptr, void *win_ptr)
 	if (win_to_destroy->glfw_window)
 		glfwDestroyWindow(win_to_destroy->glfw_window);
 	free(win_to_destroy->win_title);
-	free(win_to_destroy);
 	return (0);
 }

@@ -6,13 +6,20 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 06:30:56 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/06 01:01:22 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/14 14:39:37 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mlx.h"
 #include <stdio.h>
 #include <stdint.h>
+
+int	mouse_move(int x, int y, void *param)
+{
+	(void)param;
+	printf("%d %d\n", x, y);
+	return (0);
+}
 
 int	loop_hook(int *param)
 {
@@ -67,6 +74,7 @@ int main(void)
     void *mlx;
 	mlx = mlx_init();
     void *win = mlx_new_window(mlx, 800, 600, "Texture Test");
+	mlx_hook(win, 6, 1L << 6, mouse_move, mlx);
     void *img = mlx_new_image(mlx, 800, 600);
 	void *img2 = mlx_new_image(mlx, 800, 600);
 
