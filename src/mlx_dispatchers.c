@@ -6,11 +6,12 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 18:36:22 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/12 18:37:47 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/14 20:43:17 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mlx_int.h"
+#include <GLFW/glfw3.h>
 
 void	_mlx_glfw_dispatch_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
@@ -23,9 +24,7 @@ void	_mlx_glfw_dispatch_key_callback(GLFWwindow* window, int key, int scancode, 
 	if (!win_data)
 		return;
 	mlx_event_code = 0;
-	mlx_keycode = key;
-	if (key == GLFW_KEY_ESCAPE)
-		mlx_keycode = 53;
+	mlx_keycode = glfw_to_mlx_keycode(key);
 	if (action == GLFW_PRESS || action == GLFW_REPEAT)
 		mlx_event_code = MLX_KEY_PRESS;
 	else if (action == GLFW_RELEASE)
@@ -64,6 +63,27 @@ void	_mlx_glfw_dispatch_mouse_button_callback(GLFWwindow* window, int button, in
         user_hook(mlx_button, (int)xpos, (int)ypos, win_data->hooks[mlx_event_code].param);
     }
     (void)mods;
+}
+
+void	_mlx_glfw_dispatch_scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
+{
+	t_window		*win_data;
+	double			xpos;
+	double			ypos;
+	t_mouse_funct	user_hook;
+	int				mlx_button;
+
+	win_data = (t_window *)glfwGetWindowUserPointer(window);
+	glfwGetCursorPos(window, &xpos, &ypos);
+	mlx_button = 5;
+	if (yoffset > 0)
+		mlx_button = 4;
+	if (win_data->hooks[MLX_BUTTON_PRESS].hook)
+	{
+		user_hook = (t_mouse_funct)(void *)win_data->hooks[MLX_BUTTON_PRESS].hook;
+		user_hook(mlx_button, (int)xpos, (int)ypos, win_data->hooks[MLX_BUTTON_PRESS].param);
+	}
+	(void)xoffset;
 }
 
 void	_mlx_glfw_dispatch_cursor_pos_callback(GLFWwindow* window, double xpos, double ypos)
@@ -109,7 +129,7 @@ void	_mlx_glfw_dispatch_window_close_callback(GLFWwindow* window)
 		return;
 	if (win_data->hooks[MLX_DESTROY_NOTIFY].hook)
 	{
-		user_hook = (t_destroy_funct)(void *)win_data->hooks[MLX_DESTROY_NOTIFY].param;
+		user_hook = (t_destroy_funct)(void *)win_data->hooks[MLX_DESTROY_NOTIFY].hook;
 		user_hook(win_data->hooks[MLX_DESTROY_NOTIFY].param);
 	}
 	glfwSetWindowShouldClose(window, GLFW_TRUE);

@@ -6,7 +6,7 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 18:22:37 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/12 23:06:45 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/14 19:08:37 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_window
 typedef struct s_img
 {
 	unsigned char	*data;
+	unsigned char	*final_texture;
 	unsigned int	texture_id;
 	int				width;
 	int				height;
@@ -61,6 +62,13 @@ typedef struct s_mlx
 	int			is_loop_end;
 }	t_mlx;
 
+typedef struct s_keymap
+{
+	int	glfw_keycode;
+	int	mlx_keycode;
+}	t_keymap;
+
 unsigned int	_create_shader_program(void);
+int				glfw_to_mlx_keycode(int glfw_keycode);
 
 #endif

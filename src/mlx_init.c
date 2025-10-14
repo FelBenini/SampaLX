@@ -6,7 +6,7 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 18:21:20 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/12 00:54:30 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/14 16:30:16 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,8 @@ void	*mlx_init()
 		return (NULL);
 	}
 	mlx->is_loop_end = 0;
+	mlx->loop_hook = 0;
+	mlx->loop_param = 0;
+	mlx->win_list = 0;
 	return (mlx);
 }

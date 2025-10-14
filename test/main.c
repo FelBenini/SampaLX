@@ -6,7 +6,7 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 06:30:56 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/14 16:01:00 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/14 17:34:17 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ int	mouse_move(int x, int y, void *param)
 int	loop_hook(int *param)
 {
 	(*param)++;
+	printf("%d\n", (*param));
+	if (*param > 100)
+		return (1);
 	return (0);
 }
 
@@ -69,16 +72,32 @@ void	draw_square(void *data)
 	}
 }
 
+int	ft_close_window(void *mlx)
+{
+	mlx_loop_end(mlx);
+	return (0);
+}
+
+int	loop_key(int keycode, void *param)
+{
+	printf("%d\n", keycode);
+	(void)param;
+	return (0);
+}
+
 int main(void)
 {
     void *mlx;
 	mlx = mlx_init();
     void *win = mlx_new_window(mlx, 800, 600, "Texture Test");
 	mlx_hook(win, 6, 1L << 6, mouse_move, mlx);
+	mlx_hook(win, 17, 1L << 0, ft_close_window, mlx);
+
     void *img = mlx_new_image(mlx, 800, 600);
 	void *img2 = mlx_new_image(mlx, 800, 600);
 
 	draw_square(img);
+	mlx_key_hook(win, loop_key, mlx);
 	mlx_put_image_to_window(mlx, win, img, 0, 0);
 	draw_pixel(img2, 200, 200, 0x0000FF);
 	mlx_put_image_to_window(mlx, win, img2, 0, 0);

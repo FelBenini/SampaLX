@@ -6,7 +6,7 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 17:51:34 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/13 00:16:24 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/14 19:40:57 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,13 @@ void *mlx_new_window(void *mlx_ptr, int width, int height, char *title)
 {
 	t_window	*win;
 	t_mlx		*mlx;
-	float		vertices[16] = {
-		-1.f, -1.f, 0.f, 0.f,
-		1.f, -1.f, 1.f, 0.f,
-		1.f, 1.f, 1.f, 1.f,
-		-1.f, 1.f, 0.f, 1.f
+	float vertices[16] = {
+	    -1.f, -1.f, 0.f, 1.f,
+    	1.f, -1.f, 1.f, 1.f,
+    	1.f, 1.f, 1.f, 0.f,
+	    -1.f, 1.f, 0.f, 0.f
 	};
 	unsigned int	indices[6] = {0, 1, 2, 2, 3, 0};
-
 
 	mlx = (t_mlx *)mlx_ptr;
 	win = malloc(sizeof(t_window));
@@ -39,7 +38,7 @@ void *mlx_new_window(void *mlx_ptr, int width, int height, char *title)
 	glfwWindowHint(GLFW_DEPTH_BITS, 24);
 	glfwWindowHint(GLFW_STENCIL_BITS, 8);
 	glfwWindowHint(GLFW_ALPHA_BITS, 8);
-	win->width = width;
+	win	->width = width;
 	win->height = height;
 	win->win_title = strdup(title);
 	if (!win->win_title)

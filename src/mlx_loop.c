@@ -6,11 +6,12 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 00:50:13 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/13 00:49:57 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/14 20:40:30 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mlx_int.h"
+#include <GLFW/glfw3.h>
 
 int	mlx_loop_end(void *mlx_ptr)
 {
@@ -35,6 +36,7 @@ int	mlx_loop(void *mlx_ptr)
 	{
 		glfwSetKeyCallback(current_window->glfw_window, _mlx_glfw_dispatch_key_callback);
 		glfwSetMouseButtonCallback(current_window->glfw_window, _mlx_glfw_dispatch_mouse_button_callback);
+		glfwSetScrollCallback(current_window->glfw_window, _mlx_glfw_dispatch_scroll_callback);
 		glfwSetCursorPosCallback(current_window->glfw_window, _mlx_glfw_dispatch_cursor_pos_callback);
 		glfwSetFramebufferSizeCallback(current_window->glfw_window, _mlx_glfw_dispatch_framebuffer_size_callback);
 		glfwSetWindowCloseCallback(current_window->glfw_window, _mlx_glfw_dispatch_window_close_callback);
@@ -50,6 +52,10 @@ int	mlx_loop(void *mlx_ptr)
 			glfwMakeContextCurrent(current_window->glfw_window);
 			current_window = current_window->next;
 		}
+		if (mlx->is_loop_end)
+			break ;
+		if (!mlx->win_list)
+			mlx->is_loop_end = 1;
 		glfwPollEvents();
 	}
 	return (0);

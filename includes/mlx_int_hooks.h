@@ -6,7 +6,7 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 17:08:34 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/12 18:40:13 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/14 17:58:49 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,6 @@ void	_mlx_glfw_dispatch_key_callback(GLFWwindow* window, int key, int scancode, 
 void	_mlx_glfw_dispatch_cursor_pos_callback(GLFWwindow* window, double xpos, double ypos);
 void	_mlx_glfw_dispatch_framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void	_mlx_glfw_dispatch_window_close_callback(GLFWwindow* window);
+void	_mlx_glfw_dispatch_scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
 
 #endif

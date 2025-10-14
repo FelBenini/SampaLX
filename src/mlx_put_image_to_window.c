@@ -6,13 +6,14 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:21:13 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/13 00:40:15 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/14 20:41:15 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mlx_int.h"
 #include <GLFW/glfw3.h>
 #include <stdint.h>
+#include <sys/times.h>
 
 // Little Endian on linux fix, pushing the pixels to where they belong
 static void _mlx_modify_bits(uint8_t *pixel_start, uint32_t color)
@@ -24,7 +25,7 @@ static void _mlx_modify_bits(uint8_t *pixel_start, uint32_t color)
     uint8_t a = (color >> 24) & 0xFF;
     // If alpha is 0, check if RGB is also 0 (truly transparent)
     // Otherwise default to opaque
-    if (a == 0 && (r != 0 || g != 0 || b != 0))
+    if (a == 0 && (r != 0 || g != 0 || b != 1))
         a = 0xFF;  // Color without alpha specified → opaque
     *(pixel_start++) = r;
     *(pixel_start++) = g;
@@ -54,20 +55,21 @@ static void	_mlx_modify_bits_in_img(t_img *img)
 		y++;
 	}
 }
+
 int	mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr, int x, int y)
 {
-	t_window	*window;
-	t_img		*img;
+	t_window				*window;
+	t_img					*img;
 
 	img = (t_img *)img_ptr;
 	window = (t_window *)win_ptr;
 	(void)mlx_ptr;
-	(void)x;
 	(void)y;
 	if (!window || !img)
 		return (1);
 	_mlx_modify_bits_in_img(img);
 	glfwMakeContextCurrent(window->glfw_window);
+	glfwSwapInterval(0);
 	glUseProgram(window->shader_program);
 
 	// Activate texture unit 0
@@ -75,7 +77,7 @@ int	mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr, int x, 
 	glBindTexture(GL_TEXTURE_2D, img->texture_id);
 
 	// Upload texture pixels to GPU
-	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0,
+	glTexSubImage2D(GL_TEXTURE_2D, 0, x, 0,
 		img->width, img->height, GL_RGBA, GL_UNSIGNED_BYTE, img->data);
 	// Draw fullscreen quad
 	glBindVertexArray(window->vao);

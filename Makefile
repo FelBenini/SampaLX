@@ -6,7 +6,7 @@
 #    By: fbenini- <your@mail.com>                   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/11 18:28:31 by fbenini-          #+#    #+#              #
-#    Updated: 2025/10/14 15:16:07 by fbenini-         ###   ########.fr        #
+#    Updated: 2025/10/14 20:17:35 by fbenini-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC = cc
 
 AR = ar rcs
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -O3
 
 ENDFLAGS = -lglfw -lGL
 

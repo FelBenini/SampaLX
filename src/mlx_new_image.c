@@ -6,7 +6,7 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:02:46 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/13 00:53:27 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/14 19:46:22 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	*mlx_new_image(void *mlx_ptr, int width, int height)
 	img->endian = 1;
 	img->bits_per_pixel = 32;
 	img->line_len = width * 4;
+	img->final_texture = calloc(width * height * 4, 1);
 	img->data = calloc(width * height * 4, 1);
 	if (!img->data)
 	{
@@ -43,7 +44,7 @@ void	*mlx_new_image(void *mlx_ptr, int width, int height)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height,
-			0, GL_RGBA, GL_UNSIGNED_BYTE, img->data);
+			0, GL_RGBA, GL_UNSIGNED_BYTE, img->final_texture);
 	glBindTexture(GL_TEXTURE_2D, 0);
     return (img);
 }

@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_destroy_image.c                                :+:      :+:    :+:   */
+/*   mlx_string_put.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/14 13:26:30 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/14 19:46:53 by fbenini-         ###   ########.fr       */
+/*   Created: 2025/10/14 19:56:05 by fbenini-          #+#    #+#             */
+/*   Updated: 2025/10/14 19:57:46 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mlx_int.h"
 
-int	mlx_destroy_image(void *mlx_ptr, void *img_ptr)
+int	mlx_string_put(void *mlx_ptr, void *win_ptr, int x, int y, int color, char *string)
 {
-	t_img	*img;
-
 	(void)mlx_ptr;
-	img = (t_img *)img_ptr;
-	free(img->data);
-	free(img->final_texture);
-	free(img);
+	(void)win_ptr;
+	(void)x;
+	(void)y;
+	(void)color;
+	(void)string;
+	return (0);
+}
+
+int	mlx_mouse_get_pos(void *mlx_ptr, void *win_ptr, int *x, int *y)
+{
+	(void)mlx_ptr;
+	(void)win_ptr;
+	(void)x;
+	(void)y;
 	return (0);
 }

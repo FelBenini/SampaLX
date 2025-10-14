@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_destroy_image.c                                :+:      :+:    :+:   */
+/*   mlx_key_hook.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/14 13:26:30 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/14 19:46:53 by fbenini-         ###   ########.fr       */
+/*   Created: 2025/10/14 17:25:32 by fbenini-          #+#    #+#             */
+/*   Updated: 2025/10/14 17:32:59 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mlx_int.h"
 
-int	mlx_destroy_image(void *mlx_ptr, void *img_ptr)
+int	mlx_key_hook(void *win_ptr, int (*funct_ptr)(), void *param)
 {
-	t_img	*img;
-
-	(void)mlx_ptr;
-	img = (t_img *)img_ptr;
-	free(img->data);
-	free(img->final_texture);
-	free(img);
-	return (0);
+	return (mlx_hook(win_ptr, MLX_KEY_PRESS, MLX_KEY_PRESS_MASK, funct_ptr, param));
 }
