@@ -6,7 +6,7 @@
 #    By: fbenini- <your@mail.com>                   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/11 18:28:31 by fbenini-          #+#    #+#              #
-#    Updated: 2025/10/14 14:37:58 by fbenini-         ###   ########.fr        #
+#    Updated: 2025/10/14 15:16:07 by fbenini-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,18 +26,7 @@ GLADSRCS = ./glad/src/glad.c
 
 GLADOBJS = $(GLADSRCS:.c=.o)
 
-SRCS = ./src/mlx_init.c \
-	   ./src/mlx_destroy_display.c \
-	   ./src/mlx_loop.c \
-	   ./src/mlx_loop_hook.c \
-	   ./src/mlx_new_window.c \
-	   ./src/mlx_dispatchers.c \
-	   ./src/mlx_shaders.c \
-	   ./src/mlx_get_data_addr.c \
-	   ./src/mlx_new_image.c \
-	   ./src/mlx_put_image_to_window.c \
-	   ./src/mlx_destroy_window.c \
-	   ./src/mlx_hook.c
+SRCS = $(wildcard ./src/*.c)
 
 OBJS = $(SRCS:.c=.o)
 

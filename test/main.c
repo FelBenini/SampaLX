@@ -6,7 +6,7 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 06:30:56 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/14 14:39:37 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/14 16:01:00 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,9 @@ int main(void)
 
 	draw_square(img);
 	mlx_put_image_to_window(mlx, win, img, 0, 0);
-	draw_pixel(img2, 200, 200, 0x000000);
+	draw_pixel(img2, 200, 200, 0x0000FF);
+	mlx_put_image_to_window(mlx, win, img2, 0, 0);
+	mlx_clear_window(mlx, win);
 	mlx_put_image_to_window(mlx, win, img2, 0, 0);
 	mlx_loop(mlx);
     return 0;
