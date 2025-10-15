@@ -88,8 +88,12 @@ int	loop_key(int keycode, void *param)
 int main(void)
 {
     void *mlx;
+	int	x;
+	int	y;
 	mlx = mlx_init();
     void *win = mlx_new_window(mlx, 800, 600, "Texture Test");
+	mlx_get_screen_size(mlx, &x, &y);
+	printf("%d %d\n", x, y);
 	mlx_hook(win, 6, 1L << 6, mouse_move, mlx);
 	mlx_hook(win, 17, 1L << 0, ft_close_window, mlx);
 
