@@ -88,9 +88,9 @@ int	glfw_to_mlx_keycode(int glfw_keycode)
 		{GLFW_KEY_SPACE, 32},        // Space
 		{GLFW_KEY_MINUS, 45},        // Minus
 		{GLFW_KEY_EQUAL, 61},        // Equals
-		{GLFW_KEY_LEFT_BRACKET, 91}, // Left Bracket
+		{GLFW_KEY_LEFT_BRACKET, 92}, // Left Bracket
 		{GLFW_KEY_RIGHT_BRACKET, 93},// Right Bracket
-		{GLFW_KEY_BACKSLASH, 92},    // Backslash
+		{GLFW_KEY_BACKSLASH, 91},    // Backslash
 		{GLFW_KEY_SEMICOLON, 59},    // Semicolon
 		{GLFW_KEY_COMMA, 44},        // Comma
 		{GLFW_KEY_PERIOD, 46},       // Period

@@ -25,7 +25,7 @@
 - [] mlx_do_key_autorepeatoff()
 - [] mlx_do_key_autorepeaton()
 - [] mlx_do_sync()
-- [] mlx_mouse_get_pos()
+- [x] mlx_mouse_get_pos()
 - [] mlx_mouse_move()
 - [] mlx_mouse_hide()
 - [] mlx_mouse_show()
