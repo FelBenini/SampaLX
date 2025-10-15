@@ -69,7 +69,6 @@ int	mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr, int x, 
 		return (1);
 	_mlx_modify_bits_in_img(img);
 	glfwMakeContextCurrent(window->glfw_window);
-	glfwSwapInterval(0);
 	glUseProgram(window->shader_program);
 
 	// Activate texture unit 0
@@ -82,6 +81,6 @@ int	mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr, int x, 
 	// Draw fullscreen quad
 	glBindVertexArray(window->vao);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-	glfwSwapBuffers(window->glfw_window);
+	glFlush();
 	return (0);
 }
