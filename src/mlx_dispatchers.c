@@ -24,7 +24,7 @@ void	_mlx_glfw_dispatch_key_callback(GLFWwindow* window, int key, int scancode, 
 	if (!win_data)
 		return;
 	mlx_event_code = 0;
-	mlx_keycode = glfw_to_mlx_keycode(key);
+	mlx_keycode = _glfw_to_mlx_keycode(key);
 	if (action == GLFW_PRESS || action == GLFW_REPEAT)
 		mlx_event_code = MLX_KEY_PRESS;
 	else if (action == GLFW_RELEASE)
@@ -52,7 +52,7 @@ void	_mlx_glfw_dispatch_mouse_button_callback(GLFWwindow* window, int button, in
 		return;
     glfwGetCursorPos(window, &xpos, &ypos);
 	mlx_event_code = 0;
-	mlx_button = button + 1;
+	mlx_button = _glfw_mouse_to_mlx(button);
 	if (action == GLFW_PRESS)
 		mlx_event_code = MLX_BUTTON_PRESS;
 	else if (action == GLFW_RELEASE)

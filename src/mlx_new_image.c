@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../includes/mlx_int.h"
-#include <GLFW/glfw3.h>
 
 void	*mlx_new_image(void *mlx_ptr, int width, int height)
 {
@@ -28,12 +27,19 @@ void	*mlx_new_image(void *mlx_ptr, int width, int height)
 	img->bits_per_pixel = 32;
 	img->line_len = width * 4;
 	img->final_texture = calloc(width * height * 4, 1);
+	if (!img->final_texture)
+	{
+		free(img);
+		return (NULL);
+	}
 	img->data = calloc(width * height * 4, 1);
 	if (!img->data)
 	{
 		free(img);
 		return NULL;
 	}
+	for (int i = 0; i < width * height * 4; i++)
+		img->data[i] = 0xDD;
 	ctx = glfwGetCurrentContext();
 	if (!ctx)
 		fprintf(stderr, "ERROR: no current GL context when creating texture!\n");

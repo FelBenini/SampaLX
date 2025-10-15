@@ -23,10 +23,10 @@ static void _mlx_modify_bits(uint8_t *pixel_start, uint32_t color)
     uint8_t g = (color >> 8) & 0xFF;
     uint8_t b = color & 0xFF;
     uint8_t a = (color >> 24) & 0xFF;
-    // If alpha is 0, check if RGB is also 0 (truly transparent)
-    // Otherwise default to opaque
-    if (a == 0 && (r != 0 || g != 0 || b != 1))
-        a = 0xFF;  // Color without alpha specified → opaque
+	if (color == 0xDDDDDDDD)
+		a = 0;
+	else
+		a = 0xFF;
     *(pixel_start++) = r;
     *(pixel_start++) = g;
     *(pixel_start++) = b;
@@ -48,7 +48,7 @@ static void	_mlx_modify_bits_in_img(t_img *img)
 		while (x < img->width)
 		{
 			color = *(uint32_t *)(&img->data[(y * img->line_len + x * img->bits_per_pixel / 8)]);
-			pixelstart = (uint8_t *)(&img->data[(y * img->line_len + x * (img->bits_per_pixel / 8))]);
+			pixelstart = (uint8_t *)(&img->final_texture[(y * img->line_len + x * (img->bits_per_pixel / 8))]);
 			_mlx_modify_bits(pixelstart, color);
 			x++;
 		}
@@ -77,7 +77,7 @@ int	mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr, int x, 
 
 	// Upload texture pixels to GPU
 	glTexSubImage2D(GL_TEXTURE_2D, 0, x, 0,
-		img->width, img->height, GL_RGBA, GL_UNSIGNED_BYTE, img->data);
+		img->width, img->height, GL_RGBA, GL_UNSIGNED_BYTE, img->final_texture);
 	// Draw fullscreen quad
 	glBindVertexArray(window->vao);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

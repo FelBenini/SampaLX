@@ -69,6 +69,7 @@ typedef struct s_keymap
 }	t_keymap;
 
 unsigned int	_create_shader_program(void);
-int				glfw_to_mlx_keycode(int glfw_keycode);
+int				_glfw_to_mlx_keycode(int glfw_keycode);
+int				_glfw_mouse_to_mlx(int glfw_keycode);
 
 #endif

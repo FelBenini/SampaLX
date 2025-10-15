@@ -103,9 +103,8 @@ int main(void)
 	draw_square(img);
 	mlx_key_hook(win, loop_key, mlx);
 	mlx_put_image_to_window(mlx, win, img, 0, 0);
-	draw_pixel(img2, 200, 200, 0x0000FF);
+	draw_pixel(img2, 200, 200, 0x000000);
 	mlx_put_image_to_window(mlx, win, img2, 0, 0);
-	mlx_clear_window(mlx, win);
 	mlx_put_image_to_window(mlx, win, img2, 0, 0);
 	mlx_loop(mlx);
     return 0;

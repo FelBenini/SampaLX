@@ -11,8 +11,10 @@
 /* ************************************************************************** */
 
 #include "../includes/mlx_int.h"
+#include <GLFW/glfw3.h>
+#include <stddef.h>
 
-int	glfw_to_mlx_keycode(int glfw_keycode)
+int	_glfw_to_mlx_keycode(int glfw_keycode)
 {
 	static const t_keymap	key_mappings[] = {
 	// Alphabet keys
@@ -138,3 +140,22 @@ int	glfw_to_mlx_keycode(int glfw_keycode)
 	return (glfw_keycode);
 };
 
+int	_glfw_mouse_to_mlx(int glfw_keycode)
+{
+	static t_keymap	keymaps[] = {
+		{GLFW_MOUSE_BUTTON_1, 1},
+		{GLFW_MOUSE_BUTTON_2, 3}
+	};
+	size_t	num_maps;
+	size_t	i;
+
+	num_maps = sizeof(keymaps) / sizeof(t_keymap);
+	i = 0;
+	while (i < num_maps)
+	{
+		if (keymaps[i].glfw_keycode == glfw_keycode)
+			return (keymaps[i].mlx_keycode);
+		i++;
+	}
+	return (glfw_keycode);
+}
