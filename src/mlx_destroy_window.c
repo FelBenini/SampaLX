@@ -52,5 +52,6 @@ int	mlx_destroy_window(void *mlx_ptr, void *win_ptr)
 	if (win_to_destroy->glfw_window)
 		glfwDestroyWindow(win_to_destroy->glfw_window);
 	free(win_to_destroy->win_title);
+	free(win_to_destroy);
 	return (0);
 }
