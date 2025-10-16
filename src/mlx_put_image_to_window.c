@@ -6,7 +6,7 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:21:13 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/14 20:41:15 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/16 12:30:06 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,27 @@
 #include <sys/times.h>
 
 // Little Endian on linux fix, pushing the pixels to where they belong
-static void _mlx_modify_bits(uint8_t *pixel_start, uint32_t color)
+static void _mlx_modify_bits(uint8_t *pixel_start, uint32_t color, t_img *img)
 {
+	uint8_t	r;
+	uint8_t	g;
+	uint8_t	b;
+	uint8_t	a;
     // Extract RGBA components
-    uint8_t r = (color >> 16) & 0xFF;
-    uint8_t g = (color >> 8) & 0xFF;
-    uint8_t b = color & 0xFF;
-    uint8_t a = (color >> 24) & 0xFF;
+	if (img->endian)
+	{
+	    r = (color >> 16) & 0xFF;
+	    g = (color >> 8) & 0xFF;
+	    b = color & 0xFF;
+	    a = (color >> 24) & 0xFF;
+	}
+	else
+	{
+	    r = (color << 16) & 0xFF;
+	    g = (color << 8) & 0xFF;
+	    b = color & 0xFF;
+	    a = (color << 24) & 0xFF;
+	}
 	if (color == 0xDDDDDDDD)
 		a = 0;
 	else
@@ -49,7 +63,7 @@ static void	_mlx_modify_bits_in_img(t_img *img)
 		{
 			color = *(uint32_t *)(&img->data[(y * img->line_len + x * img->bits_per_pixel / 8)]);
 			pixelstart = (uint8_t *)(&img->final_texture[(y * img->line_len + x * (img->bits_per_pixel / 8))]);
-			_mlx_modify_bits(pixelstart, color);
+			_mlx_modify_bits(pixelstart, color, img);
 			x++;
 		}
 		y++;

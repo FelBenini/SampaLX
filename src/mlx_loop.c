@@ -6,12 +6,11 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 00:50:13 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/14 20:40:30 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/16 14:23:56 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/mlx_int.h"
-#include <GLFW/glfw3.h>
 
 int	mlx_loop_end(void *mlx_ptr)
 {
@@ -26,6 +25,7 @@ int	mlx_loop(void *mlx_ptr)
 {
 	t_mlx		*mlx;
 	t_window	*current_window;
+	t_key_funct	key_function;
 
 	mlx = (t_mlx *)mlx_ptr;
 	if (!mlx || !mlx->win_list)
@@ -34,6 +34,11 @@ int	mlx_loop(void *mlx_ptr)
 	current_window = mlx->win_list;
 	while (current_window)
 	{
+		if (current_window->hooks[MLX_KEY_PRESS].hook)
+		{
+			key_function = (t_key_funct)(void *)current_window->hooks[MLX_KEY_PRESS].hook;
+			key_function(65293, current_window->hooks[MLX_KEY_PRESS].param);
+		}
 		glfwSetKeyCallback(current_window->glfw_window, _mlx_glfw_dispatch_key_callback);
 		glfwSetMouseButtonCallback(current_window->glfw_window, _mlx_glfw_dispatch_mouse_button_callback);
 		glfwSetScrollCallback(current_window->glfw_window, _mlx_glfw_dispatch_scroll_callback);

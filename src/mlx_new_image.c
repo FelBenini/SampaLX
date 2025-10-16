@@ -6,7 +6,7 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:02:46 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/14 19:46:22 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/16 12:24:49 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,16 @@ void	*mlx_new_image(void *mlx_ptr, int width, int height)
 {
 	t_img		*img;
 	GLFWwindow	*ctx;
+	int			endian_helper;
 
 	(void)mlx_ptr;
+	endian_helper = 1;
 	img = malloc(sizeof(t_img));
 	if (!img)
 		return NULL;
 	img->width = width;
 	img->height = height;
-	img->endian = 1;
+	img->endian = (*(char *)&endian_helper == 1);
 	img->bits_per_pixel = 32;
 	img->line_len = width * 4;
 	img->final_texture = calloc(width * height * 4, 1);

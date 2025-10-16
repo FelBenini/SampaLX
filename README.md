@@ -10,7 +10,7 @@
 - [ ] mlx_get_color_value()
 - [x] mlx_mouse_hook()
 - [x] mlx_key_hook()
-- [ ] mlx_expose_hook()
+- [x] mlx_expose_hook()
 - [x] mlx_loop_hook()
 - [x] mlx_loop()
 - [x] mlx_loop_end()
