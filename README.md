@@ -27,6 +27,6 @@
 - [ ] mlx_do_sync()
 - [x] mlx_mouse_get_pos()
 - [ ] mlx_mouse_move()
-- [ ] mlx_mouse_hide()
-- [ ] mlx_mouse_show()
+- [x] mlx_mouse_hide()
+- [x] mlx_mouse_show()
 - [x] mlx_get_screen_size()

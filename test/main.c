@@ -106,6 +106,8 @@ int main(void)
 	draw_pixel(img2, 200, 200, 0x000000);
 	mlx_put_image_to_window(mlx, win, img2, 0, 0);
 	mlx_put_image_to_window(mlx, win, img2, 0, 0);
+	mlx_mouse_hide(mlx, win);
+	mlx_mouse_show(mlx, win);
 	mlx_loop(mlx);
     return 0;
 }
