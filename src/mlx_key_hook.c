@@ -14,5 +14,6 @@
 
 int	mlx_key_hook(void *win_ptr, int (*funct_ptr)(), void *param)
 {
-	return (mlx_hook(win_ptr, MLX_KEY_PRESS, MLX_KEY_PRESS_MASK, funct_ptr, param));
+	return (mlx_hook(win_ptr, MLX_KEY_PRESS,
+			MLX_KEY_PRESS_MASK, funct_ptr, param));
 }

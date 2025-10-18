@@ -13,22 +13,8 @@
 #include "../includes/mlx_int.h"
 #include <GLFW/glfw3.h>
 
-void *mlx_new_window(void *mlx_ptr, int width, int height, char *title)
+static void	initialize_hints(void)
 {
-	t_window	*win;
-	t_mlx		*mlx;
-	float vertices[16] = {
-	    -1.f, -1.f, 0.f, 1.f,
-    	1.f, -1.f, 1.f, 1.f,
-    	1.f, 1.f, 1.f, 0.f,
-	    -1.f, 1.f, 0.f, 0.f
-	};
-	unsigned int	indices[6] = {0, 1, 2, 2, 3, 0};
-
-	mlx = (t_mlx *)mlx_ptr;
-	win = malloc(sizeof(t_window));
-	if (!win || !mlx)
-		return (NULL);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
@@ -39,6 +25,25 @@ void *mlx_new_window(void *mlx_ptr, int width, int height, char *title)
 	glfwWindowHint(GLFW_STENCIL_BITS, 8);
 	glfwWindowHint(GLFW_ALPHA_BITS, 8);
 	glfwWindowHint(GLFW_DOUBLEBUFFER, GL_FALSE);
+}
+
+void	*mlx_new_window(void *mlx_ptr, int width, int height, char *title)
+{
+	t_window	*win;
+	t_mlx		*mlx;
+	float		vertices[16] = {
+		-1.f, -1.f, 0.f, 1.f,
+		1.f, -1.f, 1.f, 1.f,
+		1.f, 1.f, 1.f, 0.f,
+		-1.f, 1.f, 0.f, 0.f
+	};
+	unsigned int	indices[6] = {0, 1, 2, 2, 3, 0};
+
+	mlx = (t_mlx *)mlx_ptr;
+	win = malloc(sizeof(t_window));
+	if (!win || !mlx)
+		return (NULL);
+	initialize_hints();
 	win	->width = width;
 	win->height = height;
 	win->win_title = strdup(title);

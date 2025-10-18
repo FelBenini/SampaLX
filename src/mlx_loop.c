@@ -21,32 +21,44 @@ int	mlx_loop_end(void *mlx_ptr)
 	return (0);
 }
 
+static void	dispatch_events(t_mlx *mlx)
+{
+	t_window	*curr_win;
+	t_key_funct	key_function;
+
+	curr_win = mlx->win_list;
+	while (curr_win)
+	{
+		if (curr_win->hooks[MLX_KEY_PRESS].hook)
+		{
+			key_function = (t_key_funct)(void *)curr_win->hooks[2].hook;
+			key_function(65293, curr_win->hooks[2].param);
+		}
+		glfwSetKeyCallback(curr_win->glfw_window,
+			_mlx_glfw_dispatch_key_callback);
+		glfwSetMouseButtonCallback(curr_win->glfw_window,
+			_mlx_glfw_dispatch_mouse_button_callback);
+		glfwSetScrollCallback(curr_win->glfw_window,
+			_mlx_glfw_dispatch_scroll_callback);
+		glfwSetCursorPosCallback(curr_win->glfw_window,
+			_mlx_glfw_dispatch_cursor_pos_callback);
+		glfwSetFramebufferSizeCallback(curr_win->glfw_window,
+			_mlx_glfw_dispatch_framebuffer_size_callback);
+		glfwSetWindowCloseCallback(curr_win->glfw_window,
+			_mlx_glfw_dispatch_window_close_callback);
+		curr_win = curr_win->next;
+	}
+}
+
 int	mlx_loop(void *mlx_ptr)
 {
 	t_mlx		*mlx;
 	t_window	*current_window;
-	t_key_funct	key_function;
 
 	mlx = (t_mlx *)mlx_ptr;
 	if (!mlx || !mlx->win_list)
 		return (1);
-	// --- Set callbacks for all windows ---
-	current_window = mlx->win_list;
-	while (current_window)
-	{
-		if (current_window->hooks[MLX_KEY_PRESS].hook)
-		{
-			key_function = (t_key_funct)(void *)current_window->hooks[MLX_KEY_PRESS].hook;
-			key_function(65293, current_window->hooks[MLX_KEY_PRESS].param);
-		}
-		glfwSetKeyCallback(current_window->glfw_window, _mlx_glfw_dispatch_key_callback);
-		glfwSetMouseButtonCallback(current_window->glfw_window, _mlx_glfw_dispatch_mouse_button_callback);
-		glfwSetScrollCallback(current_window->glfw_window, _mlx_glfw_dispatch_scroll_callback);
-		glfwSetCursorPosCallback(current_window->glfw_window, _mlx_glfw_dispatch_cursor_pos_callback);
-		glfwSetFramebufferSizeCallback(current_window->glfw_window, _mlx_glfw_dispatch_framebuffer_size_callback);
-		glfwSetWindowCloseCallback(current_window->glfw_window, _mlx_glfw_dispatch_window_close_callback);
-		current_window = current_window->next;
-	}
+	dispatch_events(mlx);
 	while (!mlx->is_loop_end && mlx->win_list)
 	{
 		if (mlx->loop_hook && mlx->loop_hook(mlx->loop_param) != 0)
@@ -65,4 +77,3 @@ int	mlx_loop(void *mlx_ptr)
 	}
 	return (0);
 }
-

@@ -6,7 +6,7 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:02:46 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/16 12:24:49 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/17 18:23:36 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	*mlx_new_image(void *mlx_ptr, int width, int height)
 	endian_helper = 1;
 	img = malloc(sizeof(t_img));
 	if (!img)
-		return NULL;
+		return (NULL);
 	img->width = width;
 	img->height = height;
 	img->endian = (*(char *)&endian_helper == 1);
@@ -38,7 +38,7 @@ void	*mlx_new_image(void *mlx_ptr, int width, int height)
 	if (!img->data)
 	{
 		free(img);
-		return NULL;
+		return (NULL);
 	}
 	for (int i = 0; i < width * height * 4; i++)
 		img->data[i] = 0xDD;
@@ -52,8 +52,7 @@ void	*mlx_new_image(void *mlx_ptr, int width, int height)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height,
-			0, GL_RGBA, GL_UNSIGNED_BYTE, img->final_texture);
+		0, GL_RGBA, GL_UNSIGNED_BYTE, img->final_texture);
 	glBindTexture(GL_TEXTURE_2D, 0);
-    return (img);
+	return (img);
 }
-

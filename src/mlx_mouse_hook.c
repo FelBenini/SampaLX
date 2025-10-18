@@ -14,5 +14,6 @@
 
 int	mlx_mouse_hook(void *win_ptr, int (*funct_ptr)(), void *param)
 {
-	return (mlx_hook(win_ptr, MLX_BUTTON_PRESS, MLX_KEY_PRESS_MASK, funct_ptr, param));
+	return (mlx_hook(win_ptr, MLX_BUTTON_PRESS,
+			MLX_KEY_PRESS_MASK, funct_ptr, param));
 }

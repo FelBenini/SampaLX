@@ -12,7 +12,8 @@
 
 #include "../includes/mlx_int.h"
 
-int	mlx_string_put(void *mlx_ptr, void *win_ptr, int x, int y, int color, char *string)
+int	mlx_string_put(void *mlx_ptr, void *win_ptr, int x, int y,
+				int color, char *string)
 {
 	(void)mlx_ptr;
 	(void)win_ptr;

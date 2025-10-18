@@ -12,15 +12,13 @@
 
 #include "../includes/mlx_int.h"
 
-static const char	*vertex_shader_src =
-	"#version 330 core\n"
+static const char	*g_vertext_shader_src = "#version 330 core\n"
 	"layout(location=0) in vec2 aPos;\n"
 	"layout(location=1) in vec2 aTex;\n"
 	"out vec2 TexCoord;\n"
 	"void main(){TexCoord=aTex;gl_Position=vec4(aPos,0.0,1.0);}";
 
-static const char *fragment_shader_src =
-	"#version 330 core\n"
+static const char	*g_fragment_shader_src = "#version 330 core\n"
 	"in vec2 TexCoord;\n"
 	"out vec4 FragColor;\n"
 	"uniform sampler2D uTexture;\n"
@@ -51,8 +49,8 @@ unsigned int	_create_shader_program(void)
 	int				success;
 	char			info[512];
 
-	vertex_shader = compile_shader(GL_VERTEX_SHADER, vertex_shader_src);
-	fragment_shader = compile_shader(GL_FRAGMENT_SHADER, fragment_shader_src);
+	vertex_shader = compile_shader(GL_VERTEX_SHADER, g_vertext_shader_src);
+	fragment_shader = compile_shader(GL_FRAGMENT_SHADER, g_fragment_shader_src);
 	program = glCreateProgram();
 	glAttachShader(program, vertex_shader);
 	glAttachShader(program, fragment_shader);
@@ -70,4 +68,3 @@ unsigned int	_create_shader_program(void)
 	glUseProgram(0);
 	return (program);
 }
-

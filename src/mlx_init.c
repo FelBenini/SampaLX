@@ -18,7 +18,7 @@ static void	_mlx_glfw_error_callback(int error, const char *description)
 	fprintf(stderr, "(GLFW Backend): Error %d: %s\n", error, description);
 }
 
-void	*mlx_init()
+void	*mlx_init(void)
 {
 	t_mlx	*mlx;
 

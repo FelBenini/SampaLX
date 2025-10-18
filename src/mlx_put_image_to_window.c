@@ -16,35 +16,33 @@
 #include <sys/times.h>
 
 // Little Endian on linux fix, pushing the pixels to where they belong
-static void _mlx_modify_bits(uint8_t *pixel_start, uint32_t color, t_img *img)
+static void	_mlx_modify_bits(uint8_t *pixel_start, uint32_t color, t_img *img)
 {
 	uint8_t	r;
 	uint8_t	g;
 	uint8_t	b;
 	uint8_t	a;
-    // Extract RGBA components
+
 	if (img->endian)
 	{
-	    r = (color >> 16) & 0xFF;
-	    g = (color >> 8) & 0xFF;
-	    b = color & 0xFF;
-	    a = (color >> 24) & 0xFF;
+		r = (color >> 16) & 0xFF;
+		g = (color >> 8) & 0xFF;
+		b = color & 0xFF;
+		a = 0xFF;
 	}
 	else
 	{
-	    r = (color << 16) & 0xFF;
-	    g = (color << 8) & 0xFF;
-	    b = color & 0xFF;
-	    a = (color << 24) & 0xFF;
+		r = (color << 16) & 0xFF;
+		g = (color << 8) & 0xFF;
+		b = color & 0xFF;
+		a = 0xFF;
 	}
 	if (color == 0xDDDDDDDD)
 		a = 0;
-	else
-		a = 0xFF;
-    *(pixel_start++) = r;
-    *(pixel_start++) = g;
-    *(pixel_start++) = b;
-    *(pixel_start++) = a;
+	*(pixel_start++) = r;
+	*(pixel_start++) = g;
+	*(pixel_start++) = b;
+	*(pixel_start++) = a;
 }
 
 // Apply the little endian fix on all the pixels of an image
@@ -61,8 +59,10 @@ static void	_mlx_modify_bits_in_img(t_img *img)
 		x = 0;
 		while (x < img->width)
 		{
-			color = *(uint32_t *)(&img->data[(y * img->line_len + x * img->bits_per_pixel / 8)]);
-			pixelstart = (uint8_t *)(&img->final_texture[(y * img->line_len + x * (img->bits_per_pixel / 8))]);
+			color = *(uint32_t *)(&img->data[(y * img->line_len
+						+ x * img->bits_per_pixel / 8)]);
+			pixelstart = (uint8_t *)(&img->final_texture[(y * img->line_len
+						+ x * (img->bits_per_pixel / 8))]);
 			_mlx_modify_bits(pixelstart, color, img);
 			x++;
 		}
@@ -70,7 +70,8 @@ static void	_mlx_modify_bits_in_img(t_img *img)
 	}
 }
 
-int	mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr, int x, int y)
+int	mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr,
+						int x, int y)
 {
 	t_window				*window;
 	t_img					*img;
@@ -84,15 +85,11 @@ int	mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr, int x, 
 	_mlx_modify_bits_in_img(img);
 	glfwMakeContextCurrent(window->glfw_window);
 	glUseProgram(window->shader_program);
-
-	// Activate texture unit 0
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, img->texture_id);
-
-	// Upload texture pixels to GPU
 	glTexSubImage2D(GL_TEXTURE_2D, 0, x, 0,
-		img->width, img->height, GL_RGBA, GL_UNSIGNED_BYTE, img->final_texture);
-	// Draw fullscreen quad
+		img->width, img->height, GL_RGBA,
+		GL_UNSIGNED_BYTE, img->final_texture);
 	glBindVertexArray(window->vao);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	glfwSwapBuffers(window->glfw_window);
