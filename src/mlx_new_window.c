@@ -32,10 +32,10 @@ void	*mlx_new_window(void *mlx_ptr, int width, int height, char *title)
 	t_window	*win;
 	t_mlx		*mlx;
 	float		vertices[16] = {
-		-1.f, -1.f, 0.f, 1.f,
-		1.f, -1.f, 1.f, 1.f,
-		1.f, 1.f, 1.f, 0.f,
-		-1.f, 1.f, 0.f, 0.f
+		0.f, 0.f, 0.f, 0.f,		// bottom-left corner of the quad
+		1.f, 0.f, 1.f, 0.f,		// bottom-right
+		1.f, 1.f, 1.f, 1.f,	// top-right
+		0.f, 1.f, 0.f, 1.f	// top-left
 	};
 	unsigned int	indices[6] = {0, 1, 2, 2, 3, 0};
 

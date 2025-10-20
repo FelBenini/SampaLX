@@ -70,6 +70,21 @@ static void	_mlx_modify_bits_in_img(t_img *img)
 	}
 }
 
+static void	_set_pos_and_size_of_texture(t_window *window, t_img *img,
+								int x, int y)
+{
+	GLint	locPos;
+	GLint	locSize;
+	GLint	locWin;
+
+	locPos = glGetUniformLocation(window->shader_program, "uPosition");
+	locSize = glGetUniformLocation(window->shader_program, "uSize");
+	locWin = glGetUniformLocation(window->shader_program, "uWindow");
+	glUniform2f(locPos, (float)x, (float)y);
+	glUniform2f(locSize, (float)img->width, (float)img->height);
+	glUniform2f(locWin, (float)window->width, (float)window->height);
+}
+
 int	mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr,
 						int x, int y)
 {
@@ -82,6 +97,7 @@ int	mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr,
 	(void)y;
 	if (!window || !img)
 		return (1);
+	glfwSwapInterval(0);
 	_mlx_modify_bits_in_img(img);
 	glfwMakeContextCurrent(window->glfw_window);
 	glUseProgram(window->shader_program);
@@ -90,9 +106,10 @@ int	mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr,
 	glTexSubImage2D(GL_TEXTURE_2D, 0, x, 0,
 		img->width, img->height, GL_RGBA,
 		GL_UNSIGNED_BYTE, img->final_texture);
+	_set_pos_and_size_of_texture(window, img, x, y);
 	glBindVertexArray(window->vao);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-	glfwSwapBuffers(window->glfw_window);
 	glFlush();
+	glfwSwapBuffers(window->glfw_window);
 	return (0);
 }
