@@ -6,7 +6,7 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 06:30:56 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/14 17:34:17 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/20 14:45:10 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ int main(void)
 	mlx_put_image_to_window(mlx, win, img2, 0, 0);
 	mlx_mouse_hide(mlx, win);
 	mlx_mouse_show(mlx, win);
+	mlx_pixel_put(mlx, win, 20, 20, 0x00FF00);
 	mlx_loop(mlx);
     return 0;
 }

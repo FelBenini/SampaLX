@@ -3,7 +3,7 @@
 - [x] mlx_init()
 - [x] mlx_new_window()
 - [x] mlx_clear_window()
-- [ ] mlx_pixel_put()
+- [x] mlx_pixel_put()
 - [x] mlx_new_image()
 - [x] mlx_get_data_addr()
 - [x] mlx_put_image_to_window()
