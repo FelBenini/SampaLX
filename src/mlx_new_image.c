@@ -37,6 +37,7 @@ void	*mlx_new_image(void *mlx_ptr, int width, int height)
 	img->data = calloc(width * height * 4, 1);
 	if (!img->data)
 	{
+		free(img->final_texture);
 		free(img);
 		return (NULL);
 	}

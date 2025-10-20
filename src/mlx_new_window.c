@@ -40,8 +40,10 @@ void	*mlx_new_window(void *mlx_ptr, int width, int height, char *title)
 	unsigned int	indices[6] = {0, 1, 2, 2, 3, 0};
 
 	mlx = (t_mlx *)mlx_ptr;
+	if (!mlx)
+		return (NULL);
 	win = malloc(sizeof(t_window));
-	if (!win || !mlx)
+	if (!win)
 		return (NULL);
 	initialize_hints();
 	win	->width = width;
