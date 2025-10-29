@@ -6,7 +6,7 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 18:22:37 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/14 19:08:37 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/27 18:00:46 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MLX_INT_H
 
 # include "mlx.h"
+# include "mlx_font.h"
 # include "../glad/include/glad/glad.h"
 # include "mlx_int_hooks.h"
 # include <GLFW/glfw3.h>

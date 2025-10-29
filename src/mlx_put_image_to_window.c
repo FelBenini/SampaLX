@@ -6,7 +6,7 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 23:21:13 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/16 12:30:06 by fbenini-         ###   ########.fr       */
+/*   Updated: 2025/10/27 18:19:59 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr,
 	glUseProgram(window->shader_program);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, img->texture_id);
-	glTexSubImage2D(GL_TEXTURE_2D, 0, x, 0,
+	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0,
 		img->width, img->height, GL_RGBA,
 		GL_UNSIGNED_BYTE, img->final_texture);
 	_set_pos_and_size_of_texture(window, img, x, y);
