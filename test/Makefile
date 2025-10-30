@@ -23,7 +23,7 @@ OBJS = $(SRCS:.c=.o)
 LIBMLX = ../libmlx.a
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) ../minilibx.a -lGL -lglfw
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L.. -lmlx -lGL -lglfw
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
