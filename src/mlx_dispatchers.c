@@ -34,7 +34,6 @@ void	_mlx_glfw_dispatch_key_callback(GLFWwindow *window, int key,
 	{
 		user_hook = (t_key_funct)(void *)win_data->hooks[mlx_event_code].hook;
 		user_hook(mlx_keycode, win_data->hooks[mlx_event_code].param);
-		glfwPollEvents();
 	}
 	(void)scancode;
 	(void)mods;
@@ -64,7 +63,6 @@ void	_mlx_glfw_dispatch_mouse_button_callback(GLFWwindow *window, int button,
 		user_hook = (t_mouse_funct)(void *)win_data->hooks[mlx_event_code].hook;
 		user_hook(button, (int)xpos, (int)ypos,
 			win_data->hooks[mlx_event_code].param);
-		glfwPollEvents();
 	}
 	(void)mods;
 }
@@ -91,7 +89,6 @@ void	_mlx_glfw_dispatch_scroll_callback(GLFWwindow *window,
 			(void *)win_data->hooks[MLX_BUTTON_PRESS].hook;
 		user_hook(mlx_button, (int)xpos, (int)ypos,
 			win_data->hooks[MLX_BUTTON_PRESS].param);
-		glfwPollEvents();
 	}
 	(void)xoffset;
 }
@@ -111,7 +108,6 @@ void	_mlx_glfw_dispatch_cursor_pos_callback(GLFWwindow *window,
 			(void *)win_data->hooks[MLX_MOTION_NOTIFY].hook;
 		user_hook((int)xpos, (int)ypos,
 			win_data->hooks[MLX_MOTION_NOTIFY].param);
-		glfwPollEvents();
 	}
 }
 
@@ -131,7 +127,6 @@ void	_mlx_glfw_dispatch_framebuffer_size_callback(GLFWwindow *window,
 	{
 		user_hook = (t_expose_funct)(void *)win_data->hooks[MLX_EXPOSE].hook;
 		user_hook(win_data->hooks[MLX_EXPOSE].param);
-		glfwPollEvents();
 	}
 }
 
@@ -148,7 +143,6 @@ void	_mlx_glfw_dispatch_window_close_callback(GLFWwindow *window)
 		user_hook = (t_destroy_funct)
 			(void *)win_data->hooks[MLX_DESTROY_NOTIFY].hook;
 		user_hook(win_data->hooks[MLX_DESTROY_NOTIFY].param);
-		glfwPollEvents();
 	}
 	glfwSetWindowShouldClose(window, GLFW_TRUE);
 }
