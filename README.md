@@ -14,7 +14,7 @@
 - [x] mlx_loop_hook()
 - [x] mlx_loop()
 - [x] mlx_loop_end()
-- [ ] mlx_string_put()
+- [X] mlx_string_put()
 - [ ] mlx_set_font()
 - [ ] mlx_xpm_to_image()
 - [ ] mlx_xpm_file_to_image()

@@ -16,43 +16,29 @@
 #include <stdint.h>
 #define BPP sizeof(int32_t)
 
-// static void	*copy_char(void *dest, const void *src, size_t n, int color)
-// {
-// 	size_t			i;
-// 	unsigned int	*destp;
-// 	unsigned int	*srcp;
-//
-// 	if (dest == NULL && src == NULL)
-// 		return (NULL);
-// 	destp = (unsigned int *)dest;
-// 	srcp = (unsigned int *)src;
-// 	i = 0;
-// 	while (i < n)
-// 	{
-// 		if (srcp[i] > 0x55)
-// 			destp[i] = 0xFF;
-// 		i++;
-// 	}
-// 	(void)color;
-// 	return (destp);
-// }
-
 static void mlx_draw_char(t_img* image, int32_t texoffset, int32_t imgoffset, int color)
 {
 	uint8_t		*pixel_dest;
 	char		*pixel_src;
-	uint32_t	y;
+	uint32_t	src_color;
+	int			y;
+	int			x;
 
 	if (texoffset < 0)
 		return;
-	(void)color;
 	y = 0;
 	while (y < FONT_HEIGHT)
 	{
 		pixel_src = &font_atlas.pixels[(y * font_atlas.width + texoffset) * BPP];
 		pixel_dest = image->data + ((y * image->width + imgoffset) * BPP);
-		memcpy(pixel_dest, pixel_src, FONT_WIDTH * BPP);
-		// copy_char(pixeli, pixelx, FONT_WIDTH, color);
+		x = 0;
+		while (x < FONT_WIDTH)
+		{
+			src_color = *(uint32_t *)(pixel_src + x * BPP);
+			if (src_color != 0xFF000000)
+				*(uint32_t *)(pixel_dest + x * BPP) = color;
+			x++;
+		}
 		y++;
 	}
 }

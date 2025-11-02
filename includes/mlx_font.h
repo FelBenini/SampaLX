@@ -16,10 +16,10 @@
 # define FONT_WIDTH 6
 
 static const struct {
-	int  	 width;
-	int  	 height;
-	int  	 bytes_per_pixel; /* 2:RGB16, 3:RGB, 4:RGBA */ 
-	char 	 *pixels;
+	int				width;
+	int				height;
+	int  			bytes_per_pixel; /* 2:RGB16, 3:RGB, 4:RGBA */ 
+	char			*pixels;
 }	font_atlas = {
   1284, 15, 4,
   "\000\000\000\377\000\000\000\377\000\000\000\377\000\000\000\377\000\000\000\377\000\000\000\377\000\000\000\377\000"
