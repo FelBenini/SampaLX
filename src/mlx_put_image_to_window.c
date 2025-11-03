@@ -70,7 +70,7 @@ static void	_mlx_modify_bits_in_img(t_img *img)
 	}
 }
 
-static void	_set_pos_and_size_of_texture(t_window *window, t_img *img,
+void	_set_pos_and_size_of_texture(t_window *window, t_img *img,
 								int x, int y)
 {
 	GLint	locPos;
@@ -94,7 +94,6 @@ int	mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr,
 	img = (t_img *)img_ptr;
 	window = (t_window *)win_ptr;
 	(void)mlx_ptr;
-	(void)y;
 	if (!window || !img)
 		return (1);
 	glfwSwapInterval(0);
