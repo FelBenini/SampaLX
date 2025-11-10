@@ -109,7 +109,9 @@ int main(void)
 	mlx_mouse_hide(mlx, win);
 	mlx_mouse_show(mlx, win);
 	mlx_pixel_put(mlx, win, 20, 20, 0x00FF00);
-	mlx_string_put(mlx, win, 370, 150, 0xFF0000, "Heyyyyy");
+	for (int i = 0; i <= 30; i++) {
+		mlx_string_put(mlx, win, 370, i * 20, 0xFF0000, "Heyyyyy");
+	}
 	mlx_loop(mlx);
     return 0;
 }

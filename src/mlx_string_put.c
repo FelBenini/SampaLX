@@ -27,6 +27,8 @@ static void mlx_draw_char(t_img* image, int32_t texoffset, int32_t imgoffset, in
 	if (texoffset < 0)
 		return;
 	y = 0;
+	color <<= 8;
+	color |= 0xFF;
 	while (y < FONT_HEIGHT)
 	{
 		pixel_src = &font_atlas.pixels[(y * font_atlas.width + texoffset) * BPP];
@@ -37,6 +39,8 @@ static void mlx_draw_char(t_img* image, int32_t texoffset, int32_t imgoffset, in
 			src_color = *(uint32_t *)(pixel_src + x * BPP);
 			if (src_color != 0xFF000000)
 				*(uint32_t *)(pixel_dest + x * BPP) = color;
+			else
+			 	*(uint32_t *)(pixel_dest + x *BPP) = 0x00;
 			x++;
 		}
 		y++;
@@ -71,19 +75,17 @@ int	mlx_string_put(void *mlx_ptr, void *win_ptr, int x, int y,
 	img_offset = 0;
 	for (size_t i = 0; i < str_size; i++, img_offset += FONT_WIDTH)
 		mlx_draw_char(img, mlx_get_texoffset(string[i]), img_offset, color);
-	mlx_put_image_to_window(mlx_ptr, win_ptr, img, x, y);
 	glfwMakeContextCurrent(window->glfw_window);
 	glUseProgram(window->shader_program);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, img->texture_id);
 	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0,
 		img->width, img->height, GL_RGBA,
-		GL_UNSIGNED_BYTE, img->final_texture);
+		GL_UNSIGNED_BYTE, img->data);
 	_set_pos_and_size_of_texture(window, img, x, y);
 	glBindVertexArray(window->vao);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	glFlush();
-	glfwSwapBuffers(window->glfw_window);
 	mlx_destroy_image(mlx_ptr, img);
 	return (0);
 }

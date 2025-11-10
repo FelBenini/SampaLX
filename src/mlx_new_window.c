@@ -78,9 +78,9 @@ void	*mlx_new_window(void *mlx_ptr, int width, int height, char *title)
 	glGenBuffers(1, &win->ebo);
 	glBindVertexArray(win->vao);
 	glBindBuffer(GL_ARRAY_BUFFER, win->vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, win->ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_DYNAMIC_DRAW);
 	glVertexAttribPointer(0, 2, GL_FLOAT,
 		GL_FALSE, 4 * sizeof(float), (void *)0);
 	glEnableVertexAttribArray(0);
