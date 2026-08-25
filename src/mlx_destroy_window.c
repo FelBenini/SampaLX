@@ -40,6 +40,18 @@ static t_window	*get_window_to_destroy(t_mlx *mlx, t_window *win_to_destroy)
 	return (current);
 }
 
+static void	destroy_text_resources(t_window *win)
+{
+	if (!win->text_initialized)
+		return ;
+	glfwMakeContextCurrent(win->glfw_window);
+	glDeleteTextures(1, &win->font_texture);
+	glDeleteVertexArrays(1, &win->text_vao);
+	glDeleteBuffers(1, &win->text_vbo);
+	glDeleteBuffers(1, &win->text_ebo);
+	glDeleteProgram(win->text_program);
+}
+
 int	mlx_destroy_window(void *mlx_ptr, void *win_ptr)
 {
 	t_window	*win_to_destroy;
@@ -50,7 +62,10 @@ int	mlx_destroy_window(void *mlx_ptr, void *win_ptr)
 	if (!win_to_destroy)
 		return (-1);
 	if (win_to_destroy->glfw_window)
+	{
+		destroy_text_resources(win_to_destroy);
 		glfwDestroyWindow(win_to_destroy->glfw_window);
+	}
 	free(win_to_destroy->win_title);
 	free(win_to_destroy);
 	return (0);

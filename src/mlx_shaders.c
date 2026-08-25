@@ -37,6 +37,29 @@ static const char	*g_fragment_shader_src = "#version 330 core\n"
 	"    FragColor = texture(uTexture, TexCoord);\n"
 	"}";
 
+static const char	*g_text_vertex_shader_src = "#version 330 core\n"
+	"layout(location=0) in vec2 aPos;\n"
+	"layout(location=1) in vec2 aTex;\n"
+	"out vec2 TexCoord;\n"
+	"uniform vec2 uWindow;\n"
+	"void main() {\n"
+	"   vec2 clipPos = vec2(\n"
+	"       (aPos.x / uWindow.x) * 2.0 - 1.0,\n"
+	"       1.0 - (aPos.y / uWindow.y) * 2.0\n"
+	"   );\n"
+	"   TexCoord = aTex;\n"
+	"   gl_Position = vec4(clipPos, 0.0, 1.0);\n"
+	"}";
+
+static const char	*g_text_fragment_shader_src = "#version 330 core\n"
+	"in vec2 TexCoord;\n"
+	"out vec4 FragColor;\n"
+	"uniform sampler2D uAtlas;\n"
+	"uniform vec4 uColor;\n"
+	"void main() {\n"
+	"    FragColor = vec4(uColor.rgb, uColor.a * texture(uAtlas, TexCoord).r);\n"
+	"}";
+
 static unsigned int	compile_shader(unsigned int type, const char *src)
 {
 	unsigned int	shader;
@@ -77,5 +100,31 @@ unsigned int	_create_shader_program(void)
 	glUseProgram(program);
 	glUniform1i(glGetUniformLocation(program, "uTexture"), 0);
 	glUseProgram(0);
+	return (program);
+}
+
+unsigned int	_create_text_program(void)
+{
+	unsigned int	vertex_shader;
+	unsigned int	fragment_shader;
+	unsigned int	program;
+	int				success;
+	char			info[512];
+
+	vertex_shader = compile_shader(GL_VERTEX_SHADER, g_text_vertex_shader_src);
+	fragment_shader = compile_shader(GL_FRAGMENT_SHADER,
+			g_text_fragment_shader_src);
+	program = glCreateProgram();
+	glAttachShader(program, vertex_shader);
+	glAttachShader(program, fragment_shader);
+	glLinkProgram(program);
+	glGetProgramiv(program, GL_LINK_STATUS, &success);
+	if (!success)
+	{
+		glGetProgramInfoLog(program, 512, NULL, info);
+		fprintf(stderr, "Text shader linking failed:\n%s\n", info);
+	}
+	glDeleteShader(vertex_shader);
+	glDeleteShader(fragment_shader);
 	return (program);
 }

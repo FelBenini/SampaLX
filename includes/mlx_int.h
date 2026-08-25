@@ -35,6 +35,16 @@ typedef struct s_window
 	unsigned int	vao;
 	unsigned int	ebo;
 	unsigned int	shader_program;
+	unsigned int	text_program;
+	unsigned int	text_vao;
+	unsigned int	text_vbo;
+	unsigned int	text_ebo;
+	unsigned int	font_texture;
+	GLint			loc_u_window;
+	GLint			loc_u_color;
+	GLint			loc_u_atlas;
+	unsigned int	text_capacity;
+	int				text_initialized;
 	char			*win_title;
 	int				width;
 	int				height;
@@ -70,6 +80,7 @@ typedef struct s_keymap
 }	t_keymap;
 
 unsigned int	_create_shader_program(void);
+unsigned int	_create_text_program(void);
 int				_glfw_to_mlx_keycode(int glfw_keycode);
 int				_glfw_mouse_to_mlx(int glfw_keycode);
 void			_set_pos_and_size_of_texture(t_window *window, t_img *img,
