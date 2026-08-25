@@ -18,6 +18,7 @@ int	mlx_destroy_image(void *mlx_ptr, void *img_ptr)
 
 	(void)mlx_ptr;
 	img = (t_img *)img_ptr;
+	glDeleteTextures(1, &img->texture_id);
 	free(img->data);
 	free(img->final_texture);
 	free(img);
