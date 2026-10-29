@@ -116,7 +116,7 @@ emcc your_project.c -L. -lmlx_web -sUSE_GLFW=3 -sMIN_WEBGL_VERSION=2 \
 .
 ├── glad/         # Bundled OpenGL loader (glad.c, glad.h, khrplatform.h)
 ├── includes/     # Internal headers (mlx_int.h, mlx_int_hooks.h, mlx_font.h)
-├── src/          # Library sources (27 files)
+├── src/          # Library sources (28 files)
 ├── test/         # Demo program and its Makefile
 ├── Makefile      # Builds libmlx.a
 └── mlx.h         # Public API (also mirrored in includes/)
@@ -150,6 +150,7 @@ emcc your_project.c -L. -lmlx_web -sUSE_GLFW=3 -sMIN_WEBGL_VERSION=2 \
 | `mlx_mouse_hide` | Hide the cursor |
 | `mlx_mouse_show` | Show the cursor |
 | `mlx_get_screen_size` | Query the primary monitor resolution |
+| `mlx_xpm_file_to_image` | Load an XPM file into an image (`None`, `#rgb`/`#rrggbb`/`#rrrrggggbbbb`, common X11 color names) |
 
 ### Stubs (declared, no-op)
 
@@ -167,7 +168,6 @@ emcc your_project.c -L. -lmlx_web -sUSE_GLFW=3 -sMIN_WEBGL_VERSION=2 \
 | `mlx_get_color_value` |
 | `mlx_set_font` |
 | `mlx_xpm_to_image` |
-| `mlx_xpm_file_to_image` |
 
 ## How it works
 
