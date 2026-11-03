@@ -6,7 +6,7 @@
 /*   By: fbenini- <your@mail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/11 18:22:37 by fbenini-          #+#    #+#             */
-/*   Updated: 2025/10/27 18:00:46 by fbenini-         ###   ########.fr       */
+/*   Updated: 2026/11/02 20:23:58 by fbenini-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,27 @@ int				_glfw_to_mlx_keycode(int glfw_keycode);
 int				_glfw_mouse_to_mlx(int glfw_keycode);
 void			_set_pos_and_size_of_texture(t_window *window, t_img *img,
 											int x, int y);
+
+typedef struct s_xpm
+{
+	char			*file;
+	char			*cursor;
+	int				width;
+	int				height;
+	int				ncolors;
+	int				cpp;
+	char			*keys;
+	unsigned int	*colors;
+	int				*index;
+}	t_xpm;
+
+typedef struct s_xpm_name
+{
+	const char		*name;
+	unsigned int	rgb;
+}	t_xpm_name;
+
+int				_xpm_name_to_rgb(char *name, unsigned int *rgb);
 
 # ifdef __EMSCRIPTEN__
 void			_mlx_web_set_cursor(int hidden);
